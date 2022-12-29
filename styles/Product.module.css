@@ -1,0 +1,12 @@
+.product{
+    text-align: center;
+    /* background-color: aqua; */
+    /* width: 30%;
+    min-width: 200px; */
+    margin-left: 4vh;
+    cursor: pointer;
+    margin-bottom: 5vh;
+}
+.product div{
+    margin: 20px 0;
+}

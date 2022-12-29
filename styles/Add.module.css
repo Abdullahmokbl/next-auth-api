@@ -1,0 +1,35 @@
+.add{
+    text-align: center;
+}
+.add form{
+    background-color: #6d9ac4;
+    width: 25em;
+    margin: 70px auto;
+    padding: 3em;
+    border-radius: 8px;
+    color: #756d6d;
+}
+.add form label{
+    color: #333;
+}
+.add form input,
+.add form button{
+    display: block;
+    border: 1px solid rgb(185, 163, 163);
+    border-radius: 8px;
+    padding: 1em;
+    width: 100%;
+    margin-bottom: 2em;
+    cursor: pointer;
+}
+.add form button{
+    background-color: #ee5684;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 1em;
+    /* transition: all .4s ease-in-out 0s; */
+}
+.add form button:hover{
+    background-color: #db2058;
+}

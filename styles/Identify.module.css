@@ -1,0 +1,40 @@
+.identify form{
+    margin: 8em auto;
+    width: 40%;
+}
+.identify form input[type='email']{
+    display: block;
+    padding: 1em;
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-top: 1em;
+}
+.search{
+    display: flex;
+    justify-content: space-around;
+}
+.search a,
+.search button{
+    width: 45%;
+    padding: 1em;
+    border-radius: 8px;
+    margin-top: 1em;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+}
+.search a{
+    background-color: #fff;
+    color: blue;
+    border: 1px solid rgb(105, 105, 173);
+}
+.search button{
+    background-color: blue;
+    color: #fff;
+    border: none;
+}
+@media only screen and (max-width: 600px) {
+    .identify form{width: 80%}   
+}

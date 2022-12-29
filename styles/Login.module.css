@@ -1,0 +1,84 @@
+.page{
+    background-color: #6d9ac4;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.login{
+    background-color: white;
+    width: 25em;
+    margin: 70px auto;
+    padding: 3em;
+    border-radius: 8px;
+    color: #756d6d;
+}
+.login form input,
+.login form button{
+    display: block;
+    padding: 1em;
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.login form input[type='email']{
+    margin-bottom: 2em;
+}
+.login form input[type='checkbox']{
+    display: inline;
+    width: 1em;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+.login .eye{
+    top: 15px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
+.login form button{
+    background-color: #ee5684;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 1em;
+}
+.forget{
+    display: flex;
+    justify-content: flex-end;
+}
+.or{
+    border-bottom: 1px solid rgb(173, 155, 155);
+    text-align: center;
+    margin: 2em 0;
+    line-height: 0.1em;
+}
+.or span{
+    background-color: white;
+    padding: 0 10px;
+}
+.svg{
+    display: flex;
+    justify-content: center;
+}
+.svg svg{
+    margin-right: 1em;
+    cursor: pointer;
+    color: black;
+}
+.signup{
+    margin-top: 3em;
+    text-align: center;
+}
+.signup a{
+    font-weight: bold;
+    color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .page{background-color: #ccc;}
+    .login{
+        width: 20em;
+        padding: 0 2em;
+        background-color: #ccc;
+    }   
+}

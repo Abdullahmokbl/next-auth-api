@@ -1,0 +1,16 @@
+.product{
+    display: flex;
+    justify-content: space-between;
+}
+.info{
+    width: 50%;
+}
+.info div{
+    margin-bottom: 1em;
+}
+.error{
+    margin: 50px auto;
+    background-color: #9d9dc4;
+    padding: 1em 10em;
+    border-radius: 8px;
+}

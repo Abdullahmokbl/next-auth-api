@@ -1,0 +1,12 @@
+.cart{
+    text-align: center;
+}
+.cart h2,
+.cart h3{
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+.cart h2{
+    font-size: 6vh;
+    margin-bottom: 23vh;
+}

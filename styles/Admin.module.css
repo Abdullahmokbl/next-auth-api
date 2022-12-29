@@ -1,0 +1,69 @@
+.admin{
+    /* padding-top: 6em; */
+    /* padding-bottom: 5.30em; */
+    text-align: center;
+}
+.welcome{
+    margin-bottom: 7vh;
+}
+.users{
+    margin-bottom: 10vh;
+}
+.admin ul{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    /* margin-bottom: 5vh; */
+}
+.admin ul li{
+    background-color: rgb(28, 158, 152);
+    border: black solid 1px;
+    padding: 3vh;
+    width: 30vh;
+    list-style: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+.admin ul:first-of-type li{background-color: #741e1e;}
+
+.users ul li:first-of-type{flex: 1;}
+.users ul li:nth-of-type(2){flex: 3;}
+.users ul li:nth-of-type(3){flex: 5;}
+.users ul li:nth-of-type(4){flex: 1.5;}
+.users ul li:nth-of-type(5){flex: 2.5;}
+.users ul li:nth-of-type(6){flex: 1;}
+
+.products ul li:first-of-type{flex: 1;}
+.products ul li:nth-of-type(2){flex: 3;}
+.products ul li:nth-of-type(4){flex: 5;}
+.products ul li:nth-of-type(3){flex: 1.5;}
+.products ul li:nth-of-type(5){flex: 2.5;}
+.products ul li:nth-of-type(6){flex: 1;}
+
+.admin ul li span{cursor: pointer;}
+.delete{
+    cursor: pointer;
+}
+.del_all{
+    background-color: #741e1e;
+    width: 25%;
+    padding: 3vh;
+    margin: 3vh auto;
+    cursor: pointer;
+}
+.no{
+    padding: 7vh;
+}
+.line{
+    border-top: 1px solid black;
+    margin-bottom: 10vh;
+}
+
+@media only screen and (max-width: 600px) {
+    .admin{width: 100%;}
+    .admin ul{padding: 0;}
+    .admin ul li{padding: 1vh;}
+    .del_all{width: 50%;}
+}

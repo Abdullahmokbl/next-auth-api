@@ -1,0 +1,15 @@
+.contact{
+    text-align: center;
+}
+.contact h2,
+.contact h3{
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+.contact h2{
+    font-size: 6vh;
+    margin-bottom: 15vh;
+}
+.contact a{
+    display: block;
+}
