@@ -30,7 +30,7 @@ export default function Signup() {
   const handleSubmit = e => {
     e.preventDefault();
     setDisabled(true);
-    axios.post('http://localhost:3000/api/signup', user)
+    axios.post(process.env.NEXT_PUBLIC_API+'/signup', user)
       .then(r => router.push('/login'))
       .catch(e => {
         setDisabled(false);

@@ -12,7 +12,7 @@ export default NextAuth({
             id: 'Credentials',
             async authorize(credentials, req) {
                 const { email, password, remember } = credentials;
-                const res = await axios.post("http://localhost:3000/api/login", {email, password, remember});
+                const res = await axios.post(process.env.NEXT_PUBLIC_API+"/login", {email, password, remember});
                 const user = await res.data;
                 if (res.status && user) {
                   return user
