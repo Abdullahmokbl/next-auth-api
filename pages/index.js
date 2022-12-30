@@ -32,11 +32,13 @@ export default function Home({ products }) {
 }
 
 export const getServerSideProps = async (ctx) => {
-    const session = await getSession(ctx);
+    // const session = await getSession(ctx);
     let user = null
-    if(session) user = session.user
+    // if(session) user = session.user
     try{
       const res = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products")
+      console.log('sdfs')
+      console.log(res)
       return{
         props: {
           user,
@@ -44,6 +46,8 @@ export const getServerSideProps = async (ctx) => {
         }
       }
     }catch(e){
+      console.log('esds')
+      console.log(e)
       return{
         props: {
           user,
