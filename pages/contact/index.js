@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from '../../styles/Contact.module.css';
-import wrapper from '../../redux/store';
-import { getSession } from 'next-auth/react';
 
 export default function Contact() {
   return (
@@ -17,12 +15,4 @@ export default function Contact() {
         </div>
     </div>
   )
-}
-
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if(!session) return{props:{}}
-  return{
-    props: {user: session.user}
-  }
 }

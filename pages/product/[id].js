@@ -8,11 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
-export default function Product({product, id}) {
+export default function Product({product, id, user}) {
   const dispatch = useDispatch();
-  const { user, cart } = useSelector(state => state.users);
-  const carts = cart.filter(product => product._id === id);
-
+  console.log(user)
+  const { cart } = useSelector(state => state.users);
+  const c = cart || user?.cart
+  console.log(c)
+  const carts = user?.cart.filter(product => product._id === id);
+  console.log(carts)
   const AddButton = () => {
     return(
       <div className='button' onClick={() => dispatch(addToCart({user_id:user._id, product}))}>Add to cart</div>
@@ -41,7 +44,7 @@ export default function Product({product, id}) {
           </div>
           <h2>{product.price}$</h2>
           <div>free shipping</div>
-          {user ? carts.length <= 0 ? <AddButton /> : <AddedButton /> : ''}
+          {user && carts.length <= 0 ? <AddButton /> : <AddedButton />}
           <div>
             <h3>About</h3>
             <p>{product.info}</p>

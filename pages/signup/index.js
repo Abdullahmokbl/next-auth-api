@@ -7,10 +7,12 @@ import { faGoogle, faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-sv
 import Head from 'next/head';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { signup } from '../../redux/usersSlice';
 
 export default function Signup() {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState('');
   const [user, setUser] = useState({
@@ -30,11 +32,12 @@ export default function Signup() {
   const handleSubmit = e => {
     e.preventDefault();
     setDisabled(true);
-    axios.post(process.env.NEXT_PUBLIC_API+'/signup', user)
-      .then(r => router.push('/login'))
+    dispatch(signup(user))
+      .unwrap()
+      .then(() => router.push('/login'))
       .catch(e => {
         setDisabled(false);
-        setError(e.response.data.msg)
+        setError(e.msg)
       })
   }
 

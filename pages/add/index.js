@@ -1,6 +1,5 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -76,12 +75,4 @@ export default function Add({user}) {
         {user ? form() : login()}
     </div>
   )
-}
-
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if(!session) return{props:{}}
-  return{
-    props: {user: session.user}
-  }
 }

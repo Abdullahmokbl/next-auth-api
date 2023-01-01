@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import connectDB from './backend/mongodb';
 import User from './backend/user';
 // const { cloudinaryUpload, cloudinaryDestroy } = require('../../utils/cloudinary')
@@ -11,7 +12,9 @@ export const config = {
 }
 
 const handler = async (req, res) => {
+  const session = await getSession({req});
     if(req.method === 'GET' && req.query.page){
+      if(!session) return res.status(401).json({msg:"Unauthorized"})
       const { page } = req.query;
       User.find()
         .then( users => {
@@ -21,11 +24,12 @@ const handler = async (req, res) => {
         })
         .catch(e => console.log(e))
     }else if(req.method === 'GET'){
-        User.find()
-        .then(users => {
-            return res.status(200).json(users)
-        })
-        .catch(e => console.log(e))
+      if(!session) return res.status(401).json({msg:"Unauthorized"})
+      User.find()
+      .then(users => {
+          return res.status(200).json(users)
+      })
+      .catch(e => console.log(e))
     }else if(req.method === 'POST'){
         // upload(req, res, async function(err){
         //     if(err) throw err;
@@ -53,6 +57,7 @@ const handler = async (req, res) => {
         //     }  
         // })
     }else if(req.method === 'DELETE' && req.query.id){
+      if(!session) return res.status(401).json({msg:"Unauthorized"})
       const {id} = req.query;
       User.findByIdAndDelete(id)
         .then(async user => {
@@ -64,6 +69,7 @@ const handler = async (req, res) => {
           return res.json({succeed: false})
         })
     }else if(req.method === 'DELETE'){
+      if(!session) return res.status(401).json({msg:"Unauthorized"})
       User.deleteMany()
         .then(async (r) => {
           console.log(r)

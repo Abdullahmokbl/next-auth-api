@@ -2,6 +2,7 @@ import styles from "../styles/Home.module.css";
 import Product from "../components/Product";
 import axios from "axios";
 import { getSession } from "next-auth/react";
+import { getToken } from "next-auth/jwt";
 
 export default function Home({ products }) {
   const product =
@@ -33,20 +34,18 @@ export default function Home({ products }) {
 
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx);
-    let user = null
-    if(session) user = session.user
     try{
       const res = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products")
       return{
         props: {
-          user,
+          session,
           products: res.data
         }
       }
     }catch(e){
       return{
         props: {
-          user,
+          session,
           products: null
         }
       }

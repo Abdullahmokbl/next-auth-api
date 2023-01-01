@@ -18,6 +18,14 @@ const addToken = () => {
     return axiosConfig;
 }
 
+export const signup = createAsyncThunk('user/add', async (user, {rejectWithValue}) => {
+    try{
+        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/signup", user, addToken());
+        return res.data;
+    }catch(e){
+        return rejectWithValue(e.response.data);
+    }
+})
 export const getUsers = createAsyncThunk('users/get', async () => {
     const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users", addToken());
     return res.data;
@@ -26,22 +34,22 @@ export const getSomeUsers = createAsyncThunk('users/getsome', async (pageNum) =>
     const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users?page="+pageNum, addToken());
     return res.data;
 })
-// export const addToCart = createAsyncThunk('cart/add', async (cart, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.post(process.env.NEXT_PUBLIC_API+"/users/cart", cart, addToken());
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
-// export const delFromCart = createAsyncThunk('cart/del', async (cart, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/users/cart", {data: cart, headers: addToken().headers});
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
+export const addToCart = createAsyncThunk('cart/add', async (cart, {rejectWithValue}) => {
+    try{
+        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/cart", cart, addToken());
+        return res.data;
+    }catch(e){
+        return rejectWithValue(e.response.data);
+    }
+})
+export const delFromCart = createAsyncThunk('cart/del', async (cart, {rejectWithValue}) => {
+    try{
+        const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/cart", {data: cart, headers: addToken().headers});
+        return res.data;
+    }catch(e){
+        return rejectWithValue(e.response.data);
+    }
+})
 export const delUser = createAsyncThunk('user/del', async (id, {rejectWithValue}) => {
     try{
         const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/users?id="+id);
@@ -129,12 +137,12 @@ export const usersSlice = createSlice({
         [delAllUsers.fulfilled]: (state, action) => {
             state.someUsers = [];
         },
-        // [addToCart.fulfilled]: (state, action) => {
-        //     state.cart = [...state.cart, action.payload];
-        // },
-        // [delFromCart.fulfilled]: (state, action) => {
-        //     state.cart = [...state.cart].filter(product => product._id !== action.payload)
-        // },
+        [addToCart.fulfilled]: (state, action) => {
+            state.cart = [...state.cart, action.payload];
+        },
+        [delFromCart.fulfilled]: (state, action) => {
+            state.cart = [...state.cart].filter(product => product._id !== action.payload)
+        },
         // [SearchByEmail.fulfilled]: (state, action) => { 
         //     state.email = action.payload.email
         // }

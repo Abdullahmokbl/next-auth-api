@@ -70,7 +70,14 @@
     background-color: aqua;
 }
 .line{border-bottom: 1px solid black;}
-
+.loading{
+    opacity: 0;
+    transition: all 0.2s ease-in;
+}
+.loaded{
+    opacity: 1;
+    transition: all 0.2s ease-in;
+}
 @media only screen and (max-width: 768px) {
     .menu{display: flex;}
     .ul{

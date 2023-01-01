@@ -1,16 +1,21 @@
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styles from '../styles/Navbar.module.css';
 
-export default function Navbar({user}) {
+export default function Navbar() {
+    const { data: session, status } = useSession()
+    console.log(session)
+    let user = null;
+    if(session) user = session.user;
+
     const pathname = useRouter().pathname;
     const [showdp, setShowdp] = useState(false)
 
     const auth = () => {
         return(
-            <div className={styles.ul}>
+            <div className={`${styles.ul} ${status === 'loading'? styles.loading:styles.loaded}`}>
                 <Link href='/login'>Login</Link>
                 <Link href='/signup'>Signup</Link>
             </div>
@@ -18,7 +23,7 @@ export default function Navbar({user}) {
     }
     const welcome = () => {
         return(
-            <div className={styles.ul}>
+            <div className={`${styles.ul} ${status === 'loading'? 'loading':'loaded'}`}>
                 <div className={styles.welcome}>Welcome {user && user.name}</div>
                 <a onClick={()=> signOut({ callbackUrl: '/login' })}>Logout</a>
             </div>

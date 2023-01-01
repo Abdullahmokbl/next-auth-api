@@ -12,10 +12,9 @@ config.autoAddCss = false
 
 function MyApp({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest)
-
   return (
     <Provider store={store}>
-      <SessionProvider session={props.session}>
+      <SessionProvider session={props.pageProps.session}>
         <Head>
           <title>Shopping</title>
           <link rel="icon" type="image/x-icon" href="/flower.png" />

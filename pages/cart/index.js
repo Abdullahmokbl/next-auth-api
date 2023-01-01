@@ -1,13 +1,10 @@
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styles from '../../styles/Cart.module.css';
 
 export default function Cart({user}) {
-  const { cart } = user;
-  // const { cart } = useSelector(state => state.users);
-  const Item = cart.length > 0 && cart.map(cart => {
+  const Item = user?.cart.length > 0 && user?.cart.map(cart => {
     return(
       <div key={cart._id}>
         <h3>{cart.name}</h3>

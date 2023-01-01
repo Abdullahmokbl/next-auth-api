@@ -48,16 +48,16 @@ export default function Admin(props) {
 
   let userId = userPage*5 - 5;
   const user_info = usersPag?.length !== 0 && usersPag?.map(user => {
-    const { _id, username, email, gender, date} = user;
+    const { _id, name, email, gender, date} = user;
     userId++;
     return(
       <ul key={_id}>
         <li>{userId}</li>
-        <li>{username}</li>
+        <li>{name}</li>
         <li>{email}</li>
         <li>{gender? 'Male': 'Female'}</li>
         <li>{new Date(date).toDateString()}</li>
-        <li><div className={styles.delete} onClick={() => {if(confirm('Do you really want do delete '+username)) dispatch(delUser(_id))}}><FontAwesomeIcon icon={faTrash} size='xl' /></div></li>
+        <li><div className={styles.delete} onClick={() => {if(confirm('Do you really want do delete '+name)) dispatch(delUser(_id))}}><FontAwesomeIcon icon={faTrash} size='xl' /></div></li>
       </ul>
     )
   })
@@ -82,7 +82,7 @@ export default function Admin(props) {
       <div className={styles.users}>
         <ul>
           <li>ID</li>
-          <li>Username</li>
+          <li>Name</li>
           <li>Email</li>
           <li>Gender</li>
           <li>Created At</li>
@@ -114,7 +114,7 @@ export default function Admin(props) {
 
   return (
     <div className={`${styles.admin} container navpd`}>
-      <h2 className={styles.welcome}> Welcome {user && user.username} </h2>
+      <h2 className={styles.welcome}> Welcome {user && user.name} </h2>
       <h2>Users</h2>
       {users?.length !== 0 ? <Users /> : <h3 className={styles.no}>There is no users</h3>}
       <div className={styles.line}></div>
@@ -135,7 +135,7 @@ export const getServerSideProps = async (ctx) => {
   // console.log(token)
   // let user = null
   // if(session) user = session.user;
-  if(session.user.name === 'qqqq'){
+  if(session.user.name === 'a'){
     try{
       const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products?page=1");
       const usersRes = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/users?page=1");
