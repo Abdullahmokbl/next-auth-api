@@ -1,0 +1,38 @@
+.search{
+  display: flex;
+}
+.left{
+  background-color: azure;
+  width: 30%
+}
+.category > div{padding: 0.5em;}
+.category a{
+  display: block;
+  padding: 0.5em 1em;
+}
+.category a:hover{background-color: rgb(226, 211, 192);}
+.search hr{color: rgba(176, 169, 161, 0.32);}
+.size > div{padding: 0.5em;}
+.size section{padding: 0 1em;}
+.size a{
+  display: block;
+  padding: .5em;
+  position: relative;
+  margin-left: 1em;
+}
+/* .size a:hover a::before{background-color: aqua;} */
+.size a::before{
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 1px solid black;
+  position: absolute;
+  left: -15px;
+}
+.price{padding: 0 1em}
+.price > div:first-child{padding: .5em;margin-bottom: 1em;}
+.right{
+  background-color: seashell;
+  width: 70;
+}

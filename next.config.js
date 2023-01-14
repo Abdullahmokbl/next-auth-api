@@ -9,6 +9,18 @@ module.exports = {
   images: {
     domains: ['res.cloudinary.com'],
   },
+  i18n: {
+    locales: ['en', 'ar'],
+    defaultLocale: 'en'
+  },
+  async rewrites (){
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap'
+      }
+    ]
+  }
 }
 
 // module.exports = {

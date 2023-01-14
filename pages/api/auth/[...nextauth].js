@@ -13,23 +13,23 @@ import axios from "axios";
 //     access_type: "offline",
 //     response_type: "code",
 //   })
-async function refreshAccessToken(token) {
-  try {
-    const res = await axios.post(process.env.NEXT_PUBLIC_API+"/token",token.refreshToken);
-    const data = await res.json();
-    return {
-      ...token,
-      accessToken: data.accessToken,
-      accessTokenExpires: Date.now() + account.expires_at * 1000,
-      refreshToken: data.refreshToken ?? data.refreshToken
-    };
-  } catch (error) {
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    };
-  }
-}
+// async function refreshAccessToken(token) {
+//   try {
+//     const res = await axios.post(process.env.NEXT_PUBLIC_API+"/token",token.refreshToken);
+//     const data = await res.json();
+//     return {
+//       ...token,
+//       accessToken: data.accessToken,
+//       accessTokenExpires: Date.now() + account.expires_at * 1000,
+//       refreshToken: data.refreshToken ?? data.refreshToken
+//     };
+//   } catch (error) {
+//     return {
+//       ...token,
+//       error: "RefreshAccessTokenError",
+//     };
+//   }
+// }
 
 export default NextAuth({
   providers: [
@@ -68,14 +68,14 @@ export default NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
 //   session: { strategy: "jwt" },
-//   jwt: {
-//     // The maximum age of the NextAuth.js issued JWT in seconds.
-//     // Defaults to `session.maxAge`.
-//     maxAge: 60 * 2,
-//     // You can define your own encode/decode functions for signing and encryption
-//     // async encode() {},
-//     // async decode() {},
-//   },
+  jwt: {
+    // The maximum age of the NextAuth.js issued JWT in seconds.
+    // Defaults to `session.maxAge`.
+    maxAge: 60 * 2,
+    // You can define your own encode/decode functions for signing and encryption
+    // async encode() {},
+    // async decode() {},
+  },
   callbacks: {
     // async signIn({ user, account, profile, email, credentials }) {
     //     // if(account.provider === 'Credentials'){
@@ -106,6 +106,7 @@ export default NextAuth({
         //   token.accessToken = account.access_token
         //   token.id = user.id
         token.user = user;
+        token.isAdmin = user.isAdmin;
       }
       //   if (Date.now() > token.accessTokenExpires) {
       //     return await refreshAccessToken(token);
@@ -116,9 +117,12 @@ export default NextAuth({
     async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
-      // session.user.id = token.id
-      session.user = token.user;
-    //   console.log(session)
+      // session.user.id = token.id;
+      // session.user = token.user;
+      session.user.id = token.user.id;
+      session.user.email = token.user.email;
+      session.user.name = token.user.name;
+      session.user.cart = token.user.cart;
       return session;
     },
   },

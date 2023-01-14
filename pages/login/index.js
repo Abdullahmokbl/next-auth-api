@@ -1,5 +1,5 @@
-import React, { useState} from 'react';
-import { useSession, signIn, getCsrfToken} from 'next-auth/react';
+import React, { useRef, useState} from 'react';
+import { signIn, getCsrfToken} from 'next-auth/react';
 import Link from 'next/link';
 import styles from '../../styles/Login.module.css';
 import { useRouter } from 'next/router';
@@ -10,8 +10,9 @@ import { faEye, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default function Login({ csrfToken }) {
   const router = useRouter();
-  const { data: session } = useSession()
-  console.log(session)
+
+  const emailInput = useRef();
+  const passwordInput = useRef();
 
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState('');
@@ -49,7 +50,7 @@ export default function Login({ csrfToken }) {
       setError('')
       router.push('/')
     }else{
-      console.log(status.error)
+      setError('Invalid credentials, please try again.')
       setDisabled(false);
     }
   }
@@ -92,7 +93,6 @@ export default function Login({ csrfToken }) {
 
 // This is the recommended way for Next.js 9.3 or newer
 export async function getServerSideProps(context) {
-  
   return {
     props: {
       csrfToken: await getCsrfToken(context),

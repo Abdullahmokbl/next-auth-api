@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 
+// export { default } from 'next-auth/middleware';
+
+// export const config = {matcher: ["/add", "/dashboard/:path*"]}
+
 export default function middleware(req){
-    const verify = req.cookies.get('token')
+    const verify = req.cookies.get('next-auth.session-token')
     const url = req.url;
 
     // if(!verify && url.includes('/admin')){

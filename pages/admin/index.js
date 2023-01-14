@@ -8,14 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { getSession } from 'next-auth/react';
+import { getToken} from 'next-auth/jwt';
 
 export default function Admin(props) {
   const {user, products, users, usersCount, u_pagesCount, productsCount, p_pagesCount} = props;
   const dispatch = useDispatch();
   const { someUsers } = useSelector(state => state.users);
   const { someProducts } = useSelector(state => state.products);
-  const usersPag = someUsers || users
-  console.log(usersPag)
+  const usersPag = someUsers || users;
   const productsPag = someProducts || products
 
   const [userPage, setUserPage] = useState(1);
@@ -126,16 +126,10 @@ export default function Admin(props) {
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
-  // console.log(session)
-  if(!session) return{
-    notFound: true
-  }
+  if(!session) return{notFound: true}
+  const token = await getToken(ctx)
 
-  // const token = session.user.token
-  // console.log(token)
-  // let user = null
-  // if(session) user = session.user;
-  if(session.user.name === 'a'){
+  if(token.isAdmin){
     try{
       const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products?page=1");
       const usersRes = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/users?page=1");

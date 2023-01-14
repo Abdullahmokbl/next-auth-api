@@ -1,42 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
-const addToken = () => {
-    // get token
-    // const token = getCookie('token')
-    
-    let axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Access-Control-Allow-Origin': '*',
-        }
+const axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
     }
-
-    // if (token) axiosConfig.headers['x-auth-token'] = token;
-
-    return axiosConfig;
 }
 
 export const signup = createAsyncThunk('user/add', async (user, {rejectWithValue}) => {
     try{
-        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/signup", user, addToken());
+        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/signup", user, axiosConfig);
         return res.data;
     }catch(e){
         return rejectWithValue(e.response.data);
     }
 })
 export const getUsers = createAsyncThunk('users/get', async () => {
-    const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users", addToken());
+    const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users", axiosConfig);
     return res.data;
 })
 export const getSomeUsers = createAsyncThunk('users/getsome', async (pageNum) => {
-    const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users?page="+pageNum, addToken());
+    const res = await axios.get(process.env.NEXT_PUBLIC_API+"/users?page="+pageNum, axiosConfig);
     return res.data;
 })
 export const addToCart = createAsyncThunk('cart/add', async (cart, {rejectWithValue}) => {
     try{
-        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/cart", cart, addToken());
+        const res = await axios.post(process.env.NEXT_PUBLIC_API+"/cart", cart, axiosConfig);
         return res.data;
     }catch(e){
         return rejectWithValue(e.response.data);
@@ -44,7 +34,7 @@ export const addToCart = createAsyncThunk('cart/add', async (cart, {rejectWithVa
 })
 export const delFromCart = createAsyncThunk('cart/del', async (cart, {rejectWithValue}) => {
     try{
-        const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/cart", {data: cart, headers: addToken().headers});
+        const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/cart", {data: cart, headers: axiosConfig.headers});
         return res.data;
     }catch(e){
         return rejectWithValue(e.response.data);
@@ -60,7 +50,7 @@ export const delUser = createAsyncThunk('user/del', async (id, {rejectWithValue}
 })
 export const delAllUsers = createAsyncThunk('users/del', async (s, {rejectWithValue}) => {
     try{
-        const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/users", addToken());
+        const res = await axios.delete(process.env.NEXT_PUBLIC_API+"/users", axiosConfig);
         return res.data;
     }catch(e){
         return rejectWithValue(e.response.data);
@@ -99,42 +89,69 @@ export const delAllUsers = createAsyncThunk('users/del', async (s, {rejectWithVa
 //     }
 // })
 
+const getFromLocalStorage = (key) => {
+    if (!key || typeof window === 'undefined') {
+        return ""
+    }
+    return localStorage.getItem(key)
+}
+
+const initialState = {
+    users: [],
+    user: null,
+    cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
+    token: null,
+    isAuthenticated: false,
+    isLoading: null,
+    someUsers: null,
+    email: null,
+    mobile: null
+}
 export const usersSlice = createSlice({
     name: 'users',
-    initialState: {
-        users: [],
-        user: null,
-        cart: [],
-        token: null,
-        isAuthenticated: false,
-        isLoading: null,
-        someUsers: null,
-        email: null,
-        mobile: null
-    },
+    initialState,
     reducers: {
-        // logout: state => {
-        //     deleteCookie('token')
-        //     state.token = null;
-        //     state.user = null;
-        //     state.isAuthenticated = false;
-        // }
+        addCart: (state, action) => {
+            const items = JSON.parse(localStorage.getItem('cart')) || [];
+            // console.log(items)
+            const item = state.cart.find(product => product._id === action.payload._id);
+            if(item){
+                items.forEach(i => i._id === item._id && i.qty++);
+                localStorage.setItem('cart',JSON.stringify(items))
+                item.qty++;
+                // state.cart = [...state.cart, {...action.payload, qty: item.qty +1}];
+            }else{
+                items.push({...action.payload, qty:1})
+                localStorage.setItem('cart',JSON.stringify(items))
+                state.cart.push({...action.payload, qty: 1})
+                // state.cart = [...state.cart, {...action.payload, qty:1}];
+            }
+            // state.cart = [...state.cart, action.payload];
+        },
+        decCart: (state, action) => {
+            const items = JSON.parse(localStorage.getItem('cart'));
+            items.forEach(i => i._id === action.payload._id && i.qty--);
+            localStorage.setItem('cart',JSON.stringify(items))
+            state.cart.map(i => i._id === action.payload._id && i.qty--);
+        },
+        delCart: (state, action) => {
+            const items = JSON.parse(localStorage.getItem('cart'));
+            const newItems = items.filter(product => product._id !== action.payload)
+            localStorage.setItem('cart',JSON.stringify(newItems))
+            state.cart = [...state.cart].filter(product => product._id !== action.payload)
+        }
     },
     extraReducers: {
-        [getUsers.fulfilled]: (state, action) => {
-            state.users = action.payload;
-        },
         [getSomeUsers.fulfilled]: (state, action) => {
             state.someUsers = action.payload.users;
         },
-        [getUsers.rejected]: (state, error) => {},
         [delUser.fulfilled]: (state, action) => {
             return {
                 ...state,
                 someUsers: [...state.someUsers].filter(p => p._id !== action.payload.id)
             }
         },
-        [delAllUsers.fulfilled]: (state, action) => {
+        [delAllUsers.fulfilled]: state => {
             state.someUsers = [];
         },
         [addToCart.fulfilled]: (state, action) => {
@@ -149,6 +166,6 @@ export const usersSlice = createSlice({
     }
 });
 
-// export const { logout } = usersSlice.actions;
+export const { addCart, decCart, delCart } = usersSlice.actions;
 
 export default usersSlice.reducer;

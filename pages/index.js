@@ -2,9 +2,9 @@ import styles from "../styles/Home.module.css";
 import Product from "../components/Product";
 import axios from "axios";
 import { getSession } from "next-auth/react";
-import { getToken } from "next-auth/jwt";
 
-export default function Home({ products }) {
+Shopping.title ='fff'
+export default function Shopping({ products }) {
   const product =
     products &&
     products.map((product) => {
@@ -32,15 +32,35 @@ export default function Home({ products }) {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
-    const session = await getSession(ctx);
+// export const getServerSideProps = async (ctx) => {
+//     const session = await getSession(ctx);
+//     try{
+//       const res = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products")
+//       return{
+//         props: {
+//           session,
+//           products: res.data
+//         }
+//       }
+//     }catch(e){
+//       return{
+//         props: {
+//           session,
+//           products: null
+//         }
+//       }
+//     }
+// }
+export const getStaticProps = async (ctx) => {
+  const session = await getSession(ctx);
     try{
       const res = await axios.get(process.env.NEXT_PUBLIC_HOST+"/api/products")
       return{
         props: {
           session,
-          products: res.data
-        }
+          products: res.data,
+        },
+        revalidate: 60
       }
     }catch(e){
       return{

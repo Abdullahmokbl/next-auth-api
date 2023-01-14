@@ -48,3 +48,12 @@
     margin-left: 1em;
     cursor: pointer;
 }
+.lang{
+    text-align: center;
+}
+.lang a{
+    margin-left: .5em;
+}
+.active{
+    color: blue;
+}

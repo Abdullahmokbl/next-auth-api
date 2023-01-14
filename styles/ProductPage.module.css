@@ -5,6 +5,25 @@
 .info{
     width: 50%;
 }
+.info .qty{
+    display: flex;
+    margin: 5em auto;
+    width: 18em;
+    justify-content: space-evenly;
+}
+.info .qty div{
+    background-color: orange;
+    width: 2em;
+    height: 2em;
+    border-radius: 4px;
+    line-height: 2;
+    text-align: center;
+    cursor: pointer;
+}
+.info .qty span{
+    margin: 0 1em;
+    line-height: 2;
+}
 .info div{
     margin-bottom: 1em;
 }

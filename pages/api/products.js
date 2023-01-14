@@ -29,15 +29,12 @@ const handler = async (req, res) => {
       });
   } else if (req.method === "GET" && req.query.page) {
     const { page } = req.query;
-    Product.find()
+    const count = await Product.count()
+    Product.find().skip(page * 5 - 5).limit(5)
       .then((products) => {
-        const productsCount = products.length;
+        const productsCount = count;
         const pagesCount = Math.ceil(productsCount / 5);
-        return res.json({
-          products: products.slice(page * 5 - 5, page * 5),
-          pagesCount,
-          productsCount,
-        });
+        return res.json({products,pagesCount,productsCount});
       })
       .catch((e) => console.log(e));
   } else if (req.method === "GET") {

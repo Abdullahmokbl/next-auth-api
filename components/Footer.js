@@ -5,9 +5,11 @@ import { sendMail } from '../redux/usersSlice';
 import styles from './../styles/Footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useRouter } from 'next/router';
 
 export default function Footer() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = e => {
@@ -59,7 +61,10 @@ export default function Footer() {
         <a href='https://eg.linkedin.com/in/abdullah-mokbl-8667a8ba'><FontAwesomeIcon icon={faLinkedinIn} size='xl'/></a>
         <a href='https://twitter.com/abdullahmokbl'><FontAwesomeIcon icon={faTwitter} size='xl'/></a>
         <a href='https://github.com/Abdullahmokbl'><FontAwesomeIcon icon={faGithub} size='xl'/></a>
-        </div>
+      </div>
+      <ul className={styles.lang}>
+        {router.locales.map(lang => <Link key={lang} href={router.pathname} locale={lang} className={router.locale === lang? styles.active:undefined}>{lang}</Link>)}
+      </ul>
     </footer>
   )
 }

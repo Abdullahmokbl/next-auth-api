@@ -1,16 +1,26 @@
+import {faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../styles/Navbar.module.css';
+import Search from './Search';
 
 export default function Navbar() {
-    const { data: session, status } = useSession()
-    console.log(session)
+    const router = useRouter();
+    const { data: session, status } = useSession();
     let user = null;
     if(session) user = session.user;
 
-    const pathname = useRouter().pathname;
+    const { cart } = useSelector(state => state.users)
+    const [count, setCount] = useState(null)
+    useEffect(() => {
+        setCount(cart.length);
+    },[cart])
+
+    const pathname = router.pathname;
     const [showdp, setShowdp] = useState(false)
 
     const auth = () => {
@@ -33,9 +43,10 @@ export default function Navbar() {
     <nav className={styles.nav}>
         <div className={`${styles.cont} container`}>
             <div className={styles.title}><Link href='/'>Shopping</Link></div>
+            <Search />
             <div className={styles.ul}>
                 <Link href='/add' className={`${pathname === '/add' && styles.active}`} >Add Item</Link>
-                <Link href='/cart' className={`${pathname === '/cart' && styles.active}`} >Cart</Link>
+                <Link href='/cart' data-content={count > 0? count:null} className={`${styles.cart} ${pathname === '/cart' && styles.active}`} ><FontAwesomeIcon icon={faCartShopping} />Cart</Link>
                 <Link href='/contact' className={`${pathname === '/contact' && styles.active}`} >Contact Us</Link>
             </div>
             {user? welcome(): auth()}
@@ -45,7 +56,7 @@ export default function Navbar() {
             </div>
             <div className={`${styles.dropdown} ${showdp? styles.show: ''}`}>
             <Link href='/add' onClick={()=> setShowdp(false)}>Add Item</Link>
-            <Link href='/cart' onClick={()=> setShowdp(false)}>Cart</Link>
+            <Link href='/cart' data-content={count > 0? count:null} className={styles.cart} onClick={()=> setShowdp(false)}><FontAwesomeIcon icon={faCartShopping} />Cart</Link>
             <Link href='/contact' onClick={()=> setShowdp(false)}>Contact Us</Link>
             <div className={styles.line}></div>
             {!user && <Link href='/login' onClick={()=> setShowdp(false)}>Login</Link>}
