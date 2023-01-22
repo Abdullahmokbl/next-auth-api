@@ -1,9 +1,11 @@
 .search{
   display: flex;
+  justify-content: space-between;
 }
 .left{
   background-color: azure;
-  width: 30%
+  width: 30%;
+  height: 100%;
 }
 .category > div{padding: 0.5em;}
 .category a{
@@ -33,6 +35,26 @@
 .price{padding: 0 1em}
 .price > div:first-child{padding: .5em;margin-bottom: 1em;}
 .right{
-  background-color: seashell;
-  width: 70;
+  /* background-color: seashell; */
+  width: 65%;
+}
+.right .sort div{
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+.right .sort div:hover{color: rgb(58, 155, 155);}
+.right .sort svg{padding: .1em;}
+.right .view{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em;
+}
+.right .view a{
+  margin-left: 1em;
+}
+.right .view a:hover{
+  background-color: orange;
 }

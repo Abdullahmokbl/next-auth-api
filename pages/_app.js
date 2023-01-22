@@ -1,30 +1,56 @@
-import '../styles/globals.css';
-import { wrapper } from './../redux/store';
-import { SessionProvider } from 'next-auth/react';
-import Layout from '../components/Layout';
-import Meta from '../components/Meta';
+import "../styles/globals.css";
+import { wrapper } from "./../redux/store";
+import { SessionProvider } from "next-auth/react";
+import Layout from "../components/Layout";
+import Meta from "../components/Meta";
+import { Provider } from "react-redux";
+// import dynamic from 'next/dynamic';
+import { useRouter } from "next/router";
 
 // next font-awesome
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-import { Provider } from 'react-redux';
-import dynamic from 'next/dynamic';
-config.autoAddCss = false
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
+// next/font
+import { Nunito, Noto_Naskh_Arabic } from "@next/font/google";
+import { useEffect } from "react";
+import { ThemeProvider } from "next-themes";
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  // weight: ["400"],
+});
+const arabic = Noto_Naskh_Arabic({ subsets: ["latin"] });
+
+const theme = 'dark';
 function MyApp({ Component, ...rest }) {
-  const { store, props } = wrapper.useWrappedStore(rest)
+  const { locale } = useRouter();
+
+  // useEffect(() => {
+  //   if (locale === "ar") {
+  //     document.documentElement.style.setProperty("--direction", "rtl");
+  //   } else {
+  //     document.documentElement.style.setProperty("--direction", "ltr");
+  //   }
+  // });
+  const { store, props } = wrapper.useWrappedStore(rest);
   // match client with server
   // const Layout = dynamic(() => import("../components/Layout"), {ssr:false})
   return (
     <Provider store={store}>
       <SessionProvider session={props.pageProps.session}>
-        <Meta title={Component.name} />
-        <Layout>
-          <Component {...props.pageProps} />
-        </Layout>
+        <ThemeProvider>
+          <Meta title={Component.name} />
+          <main dir={locale === "ar" ? "rtl" : "ltr"} className={locale === "ar" ? arabic.className : nunito.className}>
+            <Layout>
+              <Component {...props.pageProps} />
+            </Layout>
+          </main>
+        </ThemeProvider>
       </SessionProvider>
     </Provider>
-  )
+  );
 }
 
 export default MyApp;

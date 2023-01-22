@@ -15,7 +15,7 @@ export const config = {
 };
 
 const handler = async (req, res) => {
-  const session = await getSession({req});
+  const session = await getSession({ req });
   if (req.method === "GET" && req.query.id) {
     const { id } = req.query;
     Product.findById(id)
@@ -29,12 +29,15 @@ const handler = async (req, res) => {
       });
   } else if (req.method === "GET" && req.query.page) {
     const { page } = req.query;
-    const count = await Product.count()
-    Product.find().skip(page * 5 - 5).limit(5)
+    const count = await Product.count();
+    // limit 12
+    Product.find()
+      .skip(page * 5 - 5)
+      .limit(5)
       .then((products) => {
         const productsCount = count;
         const pagesCount = Math.ceil(productsCount / 5);
-        return res.json({products,pagesCount,productsCount});
+        return res.json({ products, pagesCount, productsCount });
       })
       .catch((e) => console.log(e));
   } else if (req.method === "GET") {
@@ -50,7 +53,7 @@ const handler = async (req, res) => {
         });
     });
   } else if (req.method === "POST") {
-    if(!session) return res.status(401).json({msg:"Unauthorized"})
+    if (!session) return res.status(401).json({ msg: "Unauthorized" });
     upload(req, res, async function (err) {
       if (err) throw err;
       if (!req.body)
@@ -81,7 +84,7 @@ const handler = async (req, res) => {
       }
     });
   } else if (req.method === "DELETE" && req.query.id) {
-    if(!session) return res.status(401).json({msg:"Unauthorized"})
+    if (!session) return res.status(401).json({ msg: "Unauthorized" });
     const { id } = req.query;
     Product.findByIdAndDelete(id)
       .then(async (product) => {
@@ -93,7 +96,7 @@ const handler = async (req, res) => {
         return res.json({ succeed: false });
       });
   } else if (req.method === "DELETE") {
-    if(!session) return res.status(401).json({msg:"Unauthorized"})
+    if (!session) return res.status(401).json({ msg: "Unauthorized" });
     Product.deleteMany()
       .then(async (r) => {
         console.log(r);

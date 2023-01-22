@@ -1,0 +1,19 @@
+.side{
+  background-color: var(--background-secondary);
+  width: 200px;
+  position: fixed;
+  height: 100%;
+  transition: all .5s ease-in-out;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+.side:dir(ltr){left: -200px;}
+.side:dir(rtl){right: -200px;}
+.side.open:dir(ltr){left: 0;}
+.side.open:dir(rtl){right: 0;}
+
+.side > div{
+  padding: 1em;
+  cursor: pointer;
+}
+.side > div:hover{background-color: var(--background-hover);}
+/* .side > div:hover{background-color: #ece8ff;} */

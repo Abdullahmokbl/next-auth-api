@@ -1,0 +1,28 @@
+.icon{
+  position: relative;
+}
+.icon img{
+  border-radius: 50%;
+}
+.counter{
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 50%;
+  color: #fff;
+  top: -5px;
+  left: -5px;
+}
+.dropdown{
+  display: none;
+  background-color: var(--background-secondary);
+  position: absolute;
+  width: 10em;
+  right: 0;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+.dropdown a{padding: .5em 0;display: block;}
+.dropdown a:hover{background-color: var(--background-hover);}
+.dropdown.open{display: block}

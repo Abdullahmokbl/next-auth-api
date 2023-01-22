@@ -13,6 +13,7 @@
     color: #333;
 }
 .add form input,
+.add form select,
 .add form button{
     display: block;
     border: 1px solid rgb(185, 163, 163);
@@ -21,6 +22,11 @@
     width: 100%;
     margin-bottom: 2em;
     cursor: pointer;
+}
+.add form .category{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 .add form button{
     background-color: #ee5684;

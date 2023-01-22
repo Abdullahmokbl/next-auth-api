@@ -10,11 +10,6 @@
   font-size: 6vh;
   letter-spacing: 1px;
 }
-.products{
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5vh 0;
-}
 .shop{
   height: 70vh;
   text-align: center;

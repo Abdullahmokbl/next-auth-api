@@ -1,0 +1,10 @@
+.products{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5vh 0;
+  justify-content: space-between;
+}
+.products::after {
+  content: "";
+  flex: initial;
+}

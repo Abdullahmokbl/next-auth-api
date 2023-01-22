@@ -5,10 +5,75 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import Select from "../../components/Select";
 import { addProduct } from "../../redux/productsSlice";
-import styles from "../../styles/Add.module.css";
+import styles from "./index.module.css";
 
 export default function Add({ user }) {
+  // const category = {
+  //   fashion: {
+  //     "Men's Fashion": ["clothing", "shoes", "watches"],
+  //     "Women's Fashion": ["dresses", "shoes", "watches"],
+  //     "Kid's fashion": ["clothing", "shoes"],
+  //   },
+  //   electronics: {
+  //     cameras: ["lenses", "security cameras", "video cameras"],
+  //     headphones: ["earbud", "on-ear", "over-ear"],
+  //   },
+  // };
+  const category = [
+    "Electronics",
+    "Fashion",
+    "Baby",
+    "Home & Office",
+    "Toys & Games",
+    "Musical Instruments",
+  ];
+  // const [second, setSecond] = useState(category.select);
+  // console.log(select);
+  // console.log(category.select);
+  // console.log(typeof category.fashion);
+
+  // const [select, setSelect] = useState("");
+  // console.log(select);
+  // const Category = () => {
+  //   return (
+  //     <div className="category">
+  //       <select
+  //         name="category"
+  //         value={select}
+  //         // defaultValue={{ label: "dd", value: 0 }}
+  //         onChange={(e) => {
+  //           setSelect(e.target.value);
+  //         }}
+  //         required
+  //       >
+  //         <option value="" disabled>
+  //           --Please choose an option--
+  //         </option>
+  //         {cat.map((i) => {
+  //           return (
+  //             <option key={i} value={i}>
+  //               {i}
+  //             </option>
+  //           );
+  //         })}
+  //       </select>
+  //       {/* {select && (
+  //         <select name="qqq">
+  //           {second?.map((i) => {
+  //             return (
+  //               <option value={i} onChange={() => setSecond(2)}>
+  //                 {i}
+  //               </option>
+  //             );
+  //           })}
+  //         </select>
+  //       )} */}
+  //     </div>
+  //   );
+  // };
+
   const router = useRouter();
   const dispatch = useDispatch();
   const seller_name = user ? user.name : "";
@@ -75,6 +140,41 @@ export default function Add({ user }) {
           onChange={(e) => handleChange(e)}
           required
         />
+        <label htmlFor="category">Category</label>
+        <div className="category">
+          <Select options={category} />
+        </div>
+        {/* <Category /> */}
+        {/* <div className="category">
+          <select id="category" name="category">
+            <option value="aaa">ddddaaa</option>
+            <option value="bbb">bbb</option>
+            <option value="ccc">ccc</option>
+          </select>
+          <select id="category" name="category">
+            <option value="aaa">aaa</option>
+            <option value="bbb">bbb</option>
+            <option value="ccc">ccc</option>
+          </select>
+          <select id="category" name="category">
+            <option value="aaa">aaa</option>
+            <option value="bbb">bbb</option>
+            <option value="ccc">ccc</option>
+          </select>
+          <select id="category" name="category">
+            <option value="aaa">aaa</option>
+            <option value="bbb">bbb</option>
+            <option value="ccc">ccc</option>
+          </select>
+        </div> */}
+        <label htmlFor="stock">Stocking quantity</label>
+        <input
+          type="number"
+          name="stock"
+          min="0"
+          onChange={(e) => handleChange(e)}
+          required
+        />
         <label htmlFor="info">Info</label>
         <input
           type="text"
@@ -117,6 +217,6 @@ export default function Add({ user }) {
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
-  if(!session) return { props: {}}
+  if (!session) return { props: {} };
   return { props: { user: session.user } };
 };

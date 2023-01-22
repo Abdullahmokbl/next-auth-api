@@ -67,7 +67,7 @@ export default NextAuth({
     // })
   ],
   secret: process.env.NEXTAUTH_SECRET,
-//   session: { strategy: "jwt" },
+  //   session: { strategy: "jwt" },
   jwt: {
     // The maximum age of the NextAuth.js issued JWT in seconds.
     // Defaults to `session.maxAge`.
@@ -94,9 +94,9 @@ export default NextAuth({
     // },
     async jwt({ token, user, account }) {
       // console.log(account.providerAccountId)
-    //   console.log(account)
-    //   console.log(token)
-    //   console.log(user)
+      // console.log(account);
+      // console.log(token);
+      // console.log(user);
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (user) {
         // token.accessToken = account.access_token;
