@@ -6,25 +6,30 @@ import { useState } from "react";
 import styles from "../styles/Search.module.css";
 
 export default function Search() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
+  const [active, setActive] = useState(false);
   const [products, setProducts] = useState(null);
+  console.log(active);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setSearch(e.target.value);
-    if(e.target.value.length > 1){
-      axios.post(process.env.NEXT_PUBLIC_API + "/search", {search: e.target.value})
+    if (e.target.value.length > 1) {
+      axios
+        .post(process.env.NEXT_PUBLIC_API + "/search", { search: e.target.value })
         .then(res => setProducts(res.data))
-        .catch(e => console.log(e))
-    }else{setProducts(null)}
+        .catch(e => console.log(e));
+    } else {
+      setProducts(null);
+    }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.search}>
-        <FontAwesomeIcon icon={faSearch} />
+      <div className={`${styles.search} ${active ? styles.active : undefined}`}>
+        <FontAwesomeIcon icon={faSearch} onClick={() => setActive(!active)} />
         <input
           type="search"
           name="search"
@@ -34,18 +39,31 @@ export default function Search() {
           autoComplete="off"
           required
         />
-        {search && <span onClick={() => {setSearch(''); setProducts(null)}}><FontAwesomeIcon icon={faClose} /></span>}
-        <div className={styles.products}>
-          {/* <a>dsff</a>
+        {search && (
+          <span
+            onClick={() => {
+              setSearch("");
+              setProducts(null);
+            }}
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </span>
+        )}
+      </div>
+      <div className={styles.products}>
+        {/* <a>dsff</a>
           <a>dsff</a>
           <a>dsff</a>
           <a>dsff</a> */}
-          {products && products.map(product => {
-            return <Link key={product._id} href={'/product/'+product._id}>{product.name}</Link>
+        {products &&
+          products.map(product => {
+            return (
+              <Link key={product._id} href={"/product/" + product._id}>
+                {product.name}
+              </Link>
+            );
           })}
-        </div>
       </div>
-      <button className={styles.button}>Search</button>
     </form>
   );
 }

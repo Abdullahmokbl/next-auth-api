@@ -63,26 +63,28 @@ const handler = async (req, res) => {
 
         // console.log(file64);
         // console.log(file64.content);
-        const d = file64.content;
-        console.log("bbbb");
-        // console.log(req);
-        // const base64img = fs.readFileSync(req.file, { encoding: "base64" });
-        removeBackgroundFromImageBase64({
-          d,
-          apiKey: process.env.REMOVE_BACKGROUND_API_KEY,
-          size: "regular",
-          type: "product",
-          // outputFile
-        })
-          .then(r => {
-            console.log("fewf");
-            console.log(r);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-        console.log(result);
-        console.log(result.base64img);
+
+        // const d = file64.content;
+        // const localFile = "../../../media/d.jpg";
+        // const base64img = fs.readFileSync(localFile, { encoding: "base64" });
+        // console.log(base64img);
+        // console.log("bbbb");
+
+        // removeBackgroundFromImageBase64({
+        //   d,
+        //   apiKey: process.env.REMOVE_BACKGROUND_API_KEY,
+        //   size: "regular",
+        //   type: "product",
+        //   // outputFile
+        // })
+        //   .then(r => {
+        //     console.log("fewf");
+        //     console.log(r);
+        //     console.log(r.base64img);
+        //   })
+        //   .catch(e => {
+        //     console.log(e);
+        //   });
 
         const uploadResult = await cloudinaryUpload(file64.content);
         const newProduct = new Product({

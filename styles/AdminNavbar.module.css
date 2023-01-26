@@ -3,7 +3,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 1em 0;
+  /* padding: 1em 0; */
+  height: 60px;
   background-color: var(--background-secondary);
   box-shadow: var(--box-shadow);
   z-index: 9999;

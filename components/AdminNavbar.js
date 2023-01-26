@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../styles/AdminNavbar.module.css";
 import NavIcons from "./NavIcons";
+import Search from "./Search";
 
 export default function AdminNavbar({ open, handleSidebar, user }) {
   const { locale, pathname } = useRouter();
@@ -50,6 +51,7 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
             <FontAwesomeIcon icon={faList} size="xl" />
           </div>
           <div className={styles.title}>Shopping</div>
+          <Search />
           <div className={styles.langs}>
             <div className={styles.lang} onClick={() => setLangDropdown(!langDropdown)}>
               {language}
