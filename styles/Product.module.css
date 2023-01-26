@@ -11,6 +11,7 @@
     transform: scale(1.2);
     /* box-shadow: 0 0 12px 0 rgba(0,0,0,.12); */
 }
+.product img{border-radius: 8px;}
 .product div{
     margin: 20px 0;
 }

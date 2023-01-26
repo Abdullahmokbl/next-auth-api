@@ -299,23 +299,23 @@ export const getServerSideProps = async ctx => {
   const token = await getToken(ctx);
 
   // if (token.isAdmin) {
-    try {
-      const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST + "/api/products?page=1");
-      const usersRes = await axios.get(process.env.NEXT_PUBLIC_HOST + "/api/users?page=1");
-      return {
-        props: {
-          user: session.user,
-          products: productsRes.data.products,
-          p_pagesCount: productsRes.data.pagesCount,
-          productsCount: productsRes.data.productsCount,
-          users: usersRes.data.users,
-          u_pagesCount: usersRes.data.pagesCount,
-          usersCount: usersRes.data.usersCount,
-        },
-      };
-    } catch (e) {
-      return { props: { user: session.user, products: null, users: null } };
-    }
+  try {
+    const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST + "/api/products?page=1");
+    const usersRes = await axios.get(process.env.NEXT_PUBLIC_HOST + "/api/users?page=1");
+    return {
+      props: {
+        user: session.user,
+        products: productsRes.data.products,
+        p_pagesCount: productsRes.data.pagesCount,
+        productsCount: productsRes.data.productsCount,
+        users: usersRes.data.users,
+        u_pagesCount: usersRes.data.pagesCount,
+        usersCount: usersRes.data.usersCount,
+      },
+    };
+  } catch (e) {
+    return { props: { user: session.user, products: null, users: null } };
+  }
   // } else {
   //   return { notFound: true };
   // }

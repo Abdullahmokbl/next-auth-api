@@ -18,7 +18,6 @@
     padding: 1em;
     border-radius: 8px;
     width: 100%;
-    border: 1px solid #ccc;
 }
 .login form input[type='email']{
     margin-bottom: 2em;

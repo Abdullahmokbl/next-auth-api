@@ -1,4 +1,13 @@
-import { faBell, faExpand, faList, faMessage, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faBell,
+  faEllipsisVertical,
+  faExpand,
+  faList,
+  faMessage,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -13,6 +22,7 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
   const lang = locale === "ar" ? "🇪🇬 Arabic" : "🇺🇸 English";
   const [language, setLanguage] = useState(lang);
   const { name, email, image } = user;
+  const [dropdownMenu, setDropdownMenu] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
   const [notifiDropdown, setNotifiDropdown] = useState(false);
   const [messageDropdown, setMessageDropdown] = useState(false);
@@ -33,80 +43,79 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
     }
   };
   return (
-    <nav className={`${styles.nav} ${open ? styles.open : undefined}`}>
-      <div className={styles.left}>
-        <div className={styles.menu_toggle} onClick={handleSidebar}>
-          <FontAwesomeIcon icon={faList} size="xl" />
+    <>
+      <nav className={`${styles.nav} ${open ? styles.open : undefined}`}>
+        <div className={styles.left}>
+          <div onClick={handleSidebar}>
+            <FontAwesomeIcon icon={faList} size="xl" />
+          </div>
+          <div className={styles.title}>Shopping</div>
+          <div className={styles.langs}>
+            <div className={styles.lang} onClick={() => setLangDropdown(!langDropdown)}>
+              {language}
+            </div>
+            <div className={`${styles.dropdown} ${langDropdown ? styles.open : undefined}`}>
+              <Link href={pathname} locale="en" onClick={() => handleLang("🇺🇸 English")}>
+                🇺🇸 English
+              </Link>
+              <Link href={pathname} locale="ar" onClick={() => handleLang("🇪🇬 Arabic")}>
+                🇪🇬 Arabic
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className={styles.title}>Shopping</div>
-        <div className={styles.langs}>
-          <div className={styles.lang} onClick={() => setLangDropdown(!langDropdown)}>
-            {language}
+        <div className={styles.right}>
+          <div
+            onClick={() => {
+              setTheme(isNight ? "light" : "dark");
+              setIsNight(!isNight);
+            }}
+          >
+            {isNight ? <FontAwesomeIcon icon={faSun} /> : <FontAwesomeIcon icon={faMoon} />}
           </div>
-          <div className={`${styles.dropdown} ${langDropdown ? styles.open : undefined}`}>
-            <Link href={pathname} locale="en" onClick={() => handleLang("🇺🇸 English")}>
-              🇺🇸 English
-            </Link>
-            <Link href={pathname} locale="ar" onClick={() => handleLang("🇪🇬 Arabic")}>
-              🇪🇬 Arabic
-            </Link>
+          <div className={styles.full} onClick={handleScreen}>
+            <FontAwesomeIcon icon={faExpand} />
           </div>
+          <NavIcons icon={faBell} items={["d", "f"]} counter={3} />
+          <NavIcons icon={faMessage} items="" counter={23} />
+          <NavIcons image={image} items="" />
         </div>
-      </div>
-      <div className={styles.right}>
-        <div
-          onClick={() => {
-            setTheme(isNight ? "light" : "dark");
-            setIsNight(!isNight);
-          }}
-        >
-          {isNight ? <FontAwesomeIcon icon={faSun} /> : <FontAwesomeIcon icon={faMoon} />}
+        <div className={styles.sidebar_toggle} onClick={handleSidebar}>
+          <FontAwesomeIcon icon={faBars} size="xl" />
         </div>
-        <div className={styles.full} onClick={handleScreen}>
-          <FontAwesomeIcon icon={faExpand} />
+        <div className={styles.dropdown_toggle} onClick={() => setDropdownMenu(!dropdownMenu)}>
+          <FontAwesomeIcon icon={faEllipsisVertical} />
         </div>
-        {/* <div className={styles.notifi}>
-          <div onClick={() => setNotifiDropdown(!notifiDropdown)}>
-            <FontAwesomeIcon icon={faBell} />
-            <div className={styles.counter}>1</div>
+        <div className={`${styles.dropdown_menu} ${dropdownMenu ? styles.open : undefined}`}>
+          <div className={styles.langs}>
+            <div className={styles.lang} onClick={() => setLangDropdown(!langDropdown)}>
+              {language}
+            </div>
+            <div className={`${styles.dropdown} ${langDropdown ? styles.open : undefined}`}>
+              <Link href={pathname} locale="en" onClick={() => handleLang("🇺🇸 English")}>
+                🇺🇸 English
+              </Link>
+              <Link href={pathname} locale="ar" onClick={() => handleLang("🇪🇬 Arabic")}>
+                🇪🇬 Arabic
+              </Link>
+            </div>
           </div>
-          <div className={styles.dropdown}>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
+          <div
+            onClick={() => {
+              setTheme(isNight ? "light" : "dark");
+              setIsNight(!isNight);
+            }}
+          >
+            {isNight ? <FontAwesomeIcon icon={faSun} /> : <FontAwesomeIcon icon={faMoon} />}
           </div>
-        </div> */}
-        {/* <div className={styles.message}>
-          <div onClick={() => setMessageDropdown(!messageDropdown)}>
-            <FontAwesomeIcon icon={faMessage} />
-            <div className={styles.counter}>22</div>
+          <div className={styles.full} onClick={handleScreen}>
+            <FontAwesomeIcon icon={faExpand} />
           </div>
-          <div className={styles.dropdown}>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-          </div>
-        </div> */}
-        <NavIcons icon={faBell} items={["d", "f"]} counter={3} />
-        <NavIcons icon={faMessage} items="" counter={23} />
-        <NavIcons image={image} items="" />
-        {/* <div className={styles.profile}>
-          <div onClick={() => setProfileDropdown(!profileDropdown)}>
-            <Image src={image} width={30} height={30} alt="" />
-          </div>
-          <div className={styles.dropdown}>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-            <Link href="">sdsfsdf</Link>
-          </div>
-        </div> */}
-      </div>
-    </nav>
+          <NavIcons icon={faBell} items={["d", "f"]} counter={3} />
+          <NavIcons icon={faMessage} items="" counter={23} />
+          <NavIcons image={image} items="" />
+        </div>
+      </nav>
+    </>
   );
 }

@@ -1,8 +1,4 @@
-import {
-  faArrowDown,
-  faList,
-  faListCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faGrip, faList, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import Link from "next/link";
@@ -17,7 +13,7 @@ import { getSession } from "next-auth/react";
 
 export default function search({ products, p_pagesCount, productsCount }) {
   const dispatch = useDispatch();
-  const { someProducts } = useSelector((state) => state.products);
+  const { someProducts } = useSelector(state => state.products);
   const [productPage, setProductPage] = useState(1);
 
   const productsPag = someProducts || products;
@@ -76,10 +72,10 @@ export default function search({ products, p_pagesCount, productsCount }) {
           <p>1900438 products found</p>
           <div>
             <Link href="#">
-              <FontAwesomeIcon icon={faList} />
+              <FontAwesomeIcon icon={faGrip} />
             </Link>
             <Link href="#">
-              <FontAwesomeIcon icon={faListCheck} />
+              <FontAwesomeIcon icon={faList} />
             </Link>
           </div>
         </div>
@@ -97,14 +93,12 @@ export default function search({ products, p_pagesCount, productsCount }) {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async ctx => {
   const session = await getSession(ctx);
   let user = null;
   if (session) user = session.user;
   try {
-    const res = await axios.get(
-      process.env.NEXT_PUBLIC_API + "/products?page=1"
-    );
+    const res = await axios.get(process.env.NEXT_PUBLIC_API + "/products?page=1");
     return {
       props: {
         products: res.data.products,

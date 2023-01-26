@@ -2,18 +2,21 @@
 .form .search{
     padding: 2vh;
     position: relative;
-    background-color: #fff;
-    border-radius: 4px;
+    background-color: var(--background-secondary);
+    border-radius: 30px;
+    /* display: flex;
+    align-items: center; */
 }
 .search input{
-    /* padding: 1vh; */
-    border: none;
-    outline: none;
+    height: 100%;
+    padding-left: 10px;
+    background-color: var(--background-secondary);
+    /* font-size: 18px; */
 }
 .search span{cursor: pointer;}
 .search .products{
     position: absolute;
-    background-color: #fff;
+    background-color: var(--background-secondary);
     width: 100%;
     left: 0;
 }
@@ -23,7 +26,7 @@
     cursor: pointer;
 }
 .search .products a:hover{
-    background-color: rgb(224, 214, 199);
+    background-color: var(--background-hover);
 }
 .form .button{
     padding: 2vh;

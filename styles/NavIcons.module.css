@@ -13,6 +13,8 @@
   color: #fff;
   top: -5px;
   left: -5px;
+  font-size: 10px;
+  font-weight: bold;
 }
 .dropdown{
   display: none;

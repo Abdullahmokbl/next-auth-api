@@ -14,24 +14,30 @@
 .cards{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .sales{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin: 3em 0;
 }
 .year_sales,
 .countries_sales{
     padding: 2em;
+    margin-bottom: 2em;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
     background-color: var(--background-secondary);
 }
 .year_sales{
-    width: 60%;
+    width: 110vh;
+    /* height: 90vh; */
+    min-width: 300px;
 }
 .countries_sales{
-    width: 35%;
+    /* width: 450px; */
+    /* min-width: 200px; */
 }
 .sales_title{
     text-align: start;
@@ -39,6 +45,7 @@
 .row{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .new_users,
 .users_activity{
