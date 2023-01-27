@@ -1,59 +1,64 @@
-.footer{
-    margin-top: 5em;
+.footer {
+  margin-top: 5em;
 }
-.footer section{
-    display: flex;
-    flex-wrap: wrap;;
+.footer section {
+  display: flex;
+  flex-wrap: wrap;
 }
-.sec{
-    width: 31%;
-    min-width: 335px;
-    margin-left: 3vh;
-    margin-bottom: 7vh;
+.sec {
+  width: 31%;
+  min-width: 335px;
+  margin-left: 3vh;
+  margin-bottom: 7vh;
 }
-.sec p{text-align: center;}
-.line{
-    border-top: 2px solid #777;
-    margin-top: 4vh;
-    margin-bottom: 3vh;
+.sec p {
+  text-align: center;
 }
-.footer input{
-    text-align: center;
-    padding: 2vh;
-    margin-top: 2vh;
-    text-align: center;
+/* .sec:first-of-type > div:has(a) {
+  margin-bottom: 10px;
+} */
+.line {
+  border-top: 2px solid #777;
+  margin-top: 4vh;
+  margin-bottom: 3vh;
 }
-.footer input[type='submit']{
-    background-color: black;
-    padding: 3vh 4vh;
-    color: #fff;
-    cursor: pointer;
+.footer input {
+  text-align: center;
+  padding: 2vh;
+  margin-top: 2vh;
+  text-align: center;
 }
-.msg{
-    text-align: center;
-    padding: 4vh;
-    color: #291488;
+.footer input[type="submit"] {
+  background-color: black;
+  padding: 3vh 4vh;
+  color: #fff;
+  cursor: pointer;
 }
-.text{
-    text-align: center;
-    margin-top: 3vh;
-    margin-bottom: 3vh;
+.msg {
+  text-align: center;
+  padding: 4vh;
+  color: #291488;
 }
-.icons{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5vh;
+.text {
+  text-align: center;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
-.icons svg{
-    margin-left: 1em;
-    cursor: pointer;
+.icons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5vh;
 }
-.lang{
-    text-align: center;
+.icons svg {
+  margin-left: 1em;
+  cursor: pointer;
 }
-.lang a{
-    margin-left: .5em;
+.lang {
+  text-align: center;
 }
-.active{
-    color: blue;
+.lang a {
+  margin-left: 0.5em;
+}
+.active {
+  color: blue;
 }

@@ -1,71 +1,78 @@
-.page{
-    background-color: #6d9ac4;
-    position: absolute;
-    top: 0;
-    width: 100%;
+.page {
+  background-color: #6d9ac4;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
-.signup{
-    background-color: #fff;
-    width: 25em;
-    margin: 70px auto;
-    border-radius: 8px;
-    padding: 3em;
-    color: #756d6d;
+.signup {
+  background-color: #fff;
+  width: 25em;
+  margin: 70px auto;
+  border-radius: 8px;
+  padding: 3em;
+  color: #756d6d;
 }
 .signup input,
-.signup button{
-    display: block;
-    border-radius: 8px;
-    padding: 1em;
-    width: 100%;
-    margin-bottom: 2em;
-    cursor: pointer;
+.signup button {
+  display: block;
+  border-radius: 8px;
+  padding: 1em;
+  width: 100%;
+  margin-bottom: 2em;
+  cursor: pointer;
 }
-.gender{
-    display: flex;
+.signup input {
+  border: 1px solid #a49696;
 }
-.gender input{width: auto;}
-.signup form button{
-    background-color: #ee5684;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 1em;
+.gender {
+  display: flex;
 }
-.or{
-    border-top: 1px solid rgb(173, 155, 155);
-    text-align: center;
-    line-height: .1;
-    margin: 3em 0;
+.gender input {
+  width: auto;
 }
-.or span{
-    background-color: #fff;
-    padding: .6em;
-    border: 1px solid rgb(173, 155, 155);
+.signup form button {
+  background-color: #ee5684;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 1em;
 }
-.svg{
-    display: flex;
-    justify-content: center;
+.or {
+  border-top: 1px solid rgb(173, 155, 155);
+  text-align: center;
+  line-height: 0.1;
+  margin: 3em 0;
 }
-.svg svg{
-    margin-right: 1em;
-    cursor: pointer;
-    color: black;
+.or span {
+  background-color: #fff;
+  padding: 0.6em;
+  border: 1px solid rgb(173, 155, 155);
 }
-.login{
-    margin-top: 3em;
-    text-align: center;
+.svg {
+  display: flex;
+  justify-content: center;
 }
-.login a{
-    font-weight: bold;
-    color: black;
+.svg svg {
+  margin-right: 1em;
+  cursor: pointer;
+  color: black;
+}
+.login {
+  margin-top: 3em;
+  text-align: center;
+}
+.login a {
+  font-weight: bold;
+  color: black;
 }
 
 @media only screen and (max-width: 600px) {
-    .page{background-color: #ccc;}
-    .signup{
-        width: 20em;
-        padding: 0 2em;
-        background-color: #ccc;
-    }   
+  .page {
+    background-color: #ccc;
+  }
+  .signup {
+    width: 20em;
+    padding: 0 2em;
+    background-color: #ccc;
+  }
 }

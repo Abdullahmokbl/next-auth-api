@@ -6,7 +6,7 @@ export default function AdminLayout(props) {
   return (
     <>
       <AdminNavbar user={user} open={open} handleSidebar={handleSidebar} />
-      <div style={{ height: "4.4em" }}></div>
+      <div style={{ height: "60px" }}></div>
       <Sidebar open={open} />
     </>
   );

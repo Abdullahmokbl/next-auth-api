@@ -1,72 +1,68 @@
-.nav{
+.nav {
   position: fixed;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* padding: 1em 0; */
+  align-items: center;
+  padding: 1em 0;
   height: 60px;
   background-color: var(--background-secondary);
   box-shadow: var(--box-shadow);
   z-index: 9999;
 }
 .left,
-.right{
+.right {
   display: flex;
   align-items: center;
 }
-.sidebar_toggle,
+.d_sidebar,
 .dropdown_toggle,
 .left > div,
-.right > div{
+.right > div {
   cursor: pointer;
   margin: 0 1em;
 }
-.title{
+.title,
+.d_title {
   font-size: 24px;
   font-weight: 500;
 }
-.langs{
-  position: relative;
-  /* background-color: blue; */
-}
-.langs .lang{
-  width: 100%;
-  padding: 0.2em;
-}
-.langs .dropdown.open{display: block !important;}
-.dropdown{
-  display: none;
-  background-color: var(--background-secondary);
-  position: absolute;
-  width: 8em;
-  box-shadow: var(--box-shadow);
-}
-.dropdown a{padding: .5em 0;display: block;}
-.dropdown a:hover{background-color: var(--background-hover);}
-
+.d_sidebar,
+.d_title,
 .sidebar_toggle,
-.dropdown_toggle{display: none;}
-.dropdown_menu{
+.dropdown_toggle {
+  display: none;
+}
+.dropdown_menu {
   display: none;
   position: fixed;
   top: 56px;
   width: 100%;
   height: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: var(--background-secondary);
   /* background-color:aqua; */
   box-shadow: var(--box-shadow);
   justify-content: space-around;
   align-items: center;
-  transition: height .3s ease-in-out;
+  transition: height 0.3s ease-in-out;
 }
-.dropdown_menu.open{height: 45px;}
-.dropdown_menu > div{cursor: pointer;}
-@media only screen and (max-width: 600px){
-  .sidebar_toggle,
+.dropdown_menu.open {
+  height: 45px;
+}
+.dropdown_menu > div {
+  cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+  .d_sidebar,
+  .d_title,
   .dropdown_toggle,
-  .dropdown_menu{display: flex}
+  .dropdown_menu {
+    display: flex;
+  }
   /* .dropdown_menu{height: 45px;} */
   .left,
-  .right{display: none;}
+  .right {
+    display: none;
+  }
 }

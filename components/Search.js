@@ -9,7 +9,6 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [active, setActive] = useState(false);
   const [products, setProducts] = useState(null);
-  console.log(active);
 
   const handleChange = e => {
     setSearch(e.target.value);

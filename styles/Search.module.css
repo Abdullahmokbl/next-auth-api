@@ -1,42 +1,48 @@
-.form{
-    position: relative;
-    padding: 10px 0;
+.form {
+  position: relative;
+  padding: 10px 0;
 }
-.search{
-    /* background-color: var(--background-secondary); */
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    padding: 0 13px;
-    transition: all .3s ease-in-out;
+.search {
+  /* background-color: var(--background-secondary); */
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  padding: 0 13px;
+  transition: all 0.3s ease-in-out;
 }
-.search.active{
-    width: 200px;
-    border-radius: 0;
+.search.active {
+  width: 200px;
+  border-radius: 0;
 }
-.search input{
-    width: 100%;
-    padding: 0 8px;
-    height: 100%;
-    background-color: var(--background-secondary);
-    font-size: 16px;
+.search svg {
+  margin-right: 10px;
 }
-.search svg,.search span{cursor: pointer;}
-.products{
-    position: absolute;
-    background-color: var(--background-secondary);
-    width: 100%;
-    left: 0;
-    /* top: 45px; */
+.search input {
+  width: 100%;
+  padding: 0 8px;
+  height: 100%;
+  background-color: var(--background-secondary);
+  font-size: 16px;
 }
-.products a{
-    display: block;
-    padding: 2vh;
-    cursor: pointer;
+.search svg,
+.search span {
+  cursor: pointer;
 }
-.products a:hover{
-    background-color: var(--background-hover);
+.products {
+  position: absolute;
+  background-color: var(--background-secondary);
+  width: 100%;
+  left: 0;
+  /* top: 45px; */
+}
+.products a {
+  display: block;
+  padding: 2vh;
+  cursor: pointer;
+}
+.products a:hover {
+  background-color: var(--background-hover);
 }

@@ -15,7 +15,10 @@ export default function Layout(props) {
   const Layout = () => (
     <>
       {pathname !== "/login" && pathname !== "/signup" && !pathname.startsWith("/admin") && pathname !== "/_error" && (
-        <Navbar user={props.children.props.user} />
+        <>
+          <Navbar user={props.children.props.user} />
+          <div style={{ height: "60px" }}></div>
+        </>
       )}
       {/* {pathname.startsWith("/admin") && <AdminLayout />} */}
       {props.children}

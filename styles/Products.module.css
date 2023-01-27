@@ -1,4 +1,4 @@
-.products{
+.products {
   display: flex;
   flex-wrap: wrap;
   padding: 5vh 0;
@@ -7,4 +7,10 @@
 .products::after {
   content: "";
   flex: initial;
+}
+
+@media only screen and (max-width: 600px) {
+  .products {
+    justify-content: center;
+  }
 }

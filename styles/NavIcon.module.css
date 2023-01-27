@@ -1,10 +1,10 @@
-.icon{
+.icon {
   position: relative;
 }
-.icon img{
+.icon img {
   border-radius: 50%;
 }
-.counter{
+.counter {
   position: absolute;
   width: 15px;
   height: 15px;
@@ -16,15 +16,29 @@
   font-size: 10px;
   font-weight: bold;
 }
-.dropdown{
+.dropdown {
   display: none;
   background-color: var(--background-secondary);
   position: absolute;
   width: 10em;
-  right: 0;
-  border-radius: 8px;
+  /* right: 0; */
+  /* left: 50%;
+  transform: translate(-50%, 0); */
   box-shadow: var(--box-shadow);
 }
-.dropdown a{padding: .5em 0;display: block;}
-.dropdown a:hover{background-color: var(--background-hover);}
-.dropdown.open{display: block}
+.dropdown:dir(ltr) {
+  right: 0;
+}
+.dropdown:dir(rtl) {
+  left: 0;
+}
+.dropdown a {
+  padding: 0.5em 0;
+  display: block;
+}
+.dropdown a:hover {
+  background-color: var(--background-hover);
+}
+.dropdown.open {
+  display: block;
+}
