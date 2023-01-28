@@ -163,7 +163,6 @@
   height: 45px;
   /* overflow: hidden; */
   background-color: var(--background-secondary);
-  /* background-color:aqua; */
   box-shadow: var(--box-shadow);
   justify-content: space-around;
   align-items: center;

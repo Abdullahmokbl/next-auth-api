@@ -1,16 +1,16 @@
-.slider{
+.slider {
   height: 5px;
   position: relative;
 }
-.slider .progress{
+.slider .progress {
   background-color: chartreuse;
   height: 5px;
-  /* left: 25%;
-  right: 25%; */
   position: absolute;
 }
-.range{position: relative}
-.range input{
+.range {
+  position: relative;
+}
+.range input {
   position: absolute;
   height: 5px;
   top: -5px;
@@ -23,7 +23,7 @@
   margin: 0;
 }
 .range input::-webkit-slider-thumb,
-.range input::-moz-range-thumb{
+.range input::-moz-range-thumb {
   background-color: chartreuse;
   width: 17px;
   height: 17px;
@@ -34,16 +34,16 @@
   -moz-appearance: none;
 }
 
-.priceInput{
+.priceInput {
   display: flex;
   padding: 2em 0;
 }
-.priceInput .field{
+.priceInput .field {
   display: flex;
   align-items: center;
   width: 100%;
 }
-.priceInput .field input{
+.priceInput .field input {
   width: 100%;
   height: 100%;
   margin-left: 1em;
@@ -52,7 +52,7 @@
   border-radius: 5px;
   border: 1px solid #ddf2f2;
 }
-.priceInput .separator{
+.priceInput .separator {
   width: 3em;
   display: flex;
   align-items: center;

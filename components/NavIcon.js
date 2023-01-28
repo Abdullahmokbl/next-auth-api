@@ -7,7 +7,7 @@ import { useState } from 'react'
 import styles from '../styles/NavIcon.module.css'
 import useComponentVisible from './useComponentVisible'
 
-export default function NavIcons({ icon, title, image, counter, items }) {
+export default function NavIcons({ icon, size, title, image, counter, items }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(true)
   const [dropdown, setDropDown] = useState(false)
   const { locales, pathname } = useRouter()
@@ -20,7 +20,7 @@ export default function NavIcons({ icon, title, image, counter, items }) {
           setIsComponentVisible(!isComponentVisible)
         }}
       >
-        {icon && <FontAwesomeIcon icon={icon} />}
+        {icon && <FontAwesomeIcon icon={icon} size={size} />}
         {title && title}
         {image && <Image src={image} width={30} height={30} alt="test" />}
         {counter > 0 && <div className={styles.counter}>{counter}</div>}
@@ -32,7 +32,7 @@ export default function NavIcons({ icon, title, image, counter, items }) {
               key={key}
               href={locales.includes(key) ? pathname : key}
               locale={key}
-              onClick={() => key === 'login' && signOut({ callbackUrl: '/login' })}
+              onClick={() => key === 'logout' && signOut({ callbackUrl: '/login' })}
             >
               {value}
             </Link>

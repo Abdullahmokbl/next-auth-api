@@ -1,4 +1,14 @@
-import { faBars, faBell, faEllipsisVertical, faExpand, faList, faMessage, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBars,
+  faBell,
+  faEllipsisVertical,
+  faExpand,
+  faList,
+  faMessage,
+  faMoon,
+  faSun,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
@@ -55,7 +65,11 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
           </div>
           <NavIcons icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
           <NavIcons icon={faMessage} items="" counter={23} />
-          <NavIcons image={image} items={{ profile: name, setting: 'setting', login: 'log out' }} />
+          {image === undefined ? (
+            <NavIcons icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+          ) : (
+            <NavIcons image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+          )}
         </div>
         <div className={styles.d_sidebar} onClick={handleSidebar}>
           <FontAwesomeIcon icon={faBars} size="xl" />
@@ -81,7 +95,11 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
           </div>
           <NavIcons icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
           <NavIcons icon={faMessage} items="" counter={23} />
-          <NavIcons image={image} items={{ profile: name, setting: 'setting', login: 'log out' }} />
+          {image === undefined ? (
+            <NavIcons icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+          ) : (
+            <NavIcons image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+          )}
         </div>
       </nav>
     </>

@@ -38,17 +38,14 @@
   position: fixed;
   top: 56px;
   width: 100%;
-  height: 0;
+  /* height: 0; */
+  height: 45px;
   /* overflow: hidden; */
   background-color: var(--background-secondary);
-  /* background-color:aqua; */
   box-shadow: var(--box-shadow);
   justify-content: space-around;
   align-items: center;
-  transition: height 0.3s ease-in-out;
-}
-.dropdown_menu.open {
-  height: 45px;
+  /* transition: all 0.3s ease-in-out; */
 }
 .dropdown_menu > div {
   cursor: pointer;
@@ -56,8 +53,10 @@
 @media only screen and (max-width: 600px) {
   .d_sidebar,
   .d_title,
-  .dropdown_toggle,
-  .dropdown_menu {
+  .dropdown_toggle {
+    display: flex;
+  }
+  .dropdown_menu.open {
     display: flex;
   }
   /* .dropdown_menu{height: 45px;} */

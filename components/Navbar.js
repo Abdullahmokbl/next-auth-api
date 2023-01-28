@@ -44,7 +44,7 @@
 //   )
 // }
 
-import { faBell, faCartShopping, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { faBell, faCartShopping, faEllipsisVertical, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -79,7 +79,11 @@ export default function Navbar() {
   const Welcome = () => (
     <>
       <NavIcons icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
-      <NavIcons image={image} items={{ profile: name, setting: 'setting', login: 'log out' }} />
+      {image === undefined ? (
+        <NavIcons icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+      ) : (
+        <NavIcons image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+      )}
     </>
   )
 

@@ -6,9 +6,9 @@
   flex-wrap: wrap;
 }
 .sec {
-  width: 31%;
+  width: 30%;
   min-width: 335px;
-  margin-left: 3vh;
+  margin: 0 3vh;
   margin-bottom: 7vh;
 }
 .sec p {
@@ -28,7 +28,7 @@
   margin-top: 2vh;
   text-align: center;
 }
-.footer input[type="submit"] {
+.footer input[type='submit'] {
   background-color: black;
   padding: 3vh 4vh;
   color: #fff;
