@@ -1,4 +1,4 @@
-.users {
+.products {
   width: 100%;
   /* text-align: center; */
   transition: all 0.5s ease-in-out;
@@ -8,12 +8,12 @@
   margin: 50px auto;
   text-align: center;
 }
-.users:dir(ltr) {
+.products:dir(ltr) {
   float: right;
 }
-.users:dir(rtl) {
+.products:dir(rtl) {
   float: left;
 }
-.users.open {
+.products.open {
   width: calc(100% - 200px);
 }

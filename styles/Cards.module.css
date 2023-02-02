@@ -1,0 +1,23 @@
+.cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 3em 0;
+}
+.cards > div {
+  padding: 1em;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: var(--background-secondary);
+  box-shadow: var(--box-shadow);
+  min-width: 500px;
+}
+@media only screen and (max-width: 600px) {
+  .cards {
+    justify-content: center;
+  }
+  .cards > div {
+    min-width: 300px;
+  }
+}

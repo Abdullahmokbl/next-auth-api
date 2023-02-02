@@ -1,5 +1,7 @@
 .icon {
   position: relative;
+  cursor: pointer;
+  text-align: center;
 }
 .icon img {
   border-radius: 50%;

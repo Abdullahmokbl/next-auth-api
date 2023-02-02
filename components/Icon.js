@@ -4,10 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import styles from '../styles/NavIcon.module.css'
+import styles from '../styles/Icon.module.css'
 import useComponentVisible from './useComponentVisible'
 
-export default function NavIcons({ icon, size, title, image, counter, items }) {
+export default function Icon({ icon, size, title, image, counter, items }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(true)
   const [dropdown, setDropDown] = useState(false)
   const { locales, pathname } = useRouter()

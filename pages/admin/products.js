@@ -4,10 +4,10 @@ import { getSession } from 'next-auth/react'
 import { useState } from 'react'
 import AdminLayout from '../../components/AdminLayout'
 import Items from '../../components/Items'
-import styles from './users.module.css'
+import styles from './products.module.css'
 
-export default function users(props) {
-  const { user, users, usersCount, u_pagesCount } = props
+export default function products(props) {
+  const { user, products, productsCount, pagesCount } = props
 
   const [open, setOpen] = useState(false)
   const handleSidebar = () => {
@@ -16,8 +16,8 @@ export default function users(props) {
   return (
     <>
       <AdminLayout user={user} open={open} handleSidebar={handleSidebar} />
-      <div className={`${styles.users} ${open && styles.open}`}>
-        <Items type="user" items={users} count={usersCount} pagesCount={u_pagesCount} paginate={true} />
+      <div className={`${styles.products} ${open && styles.open}`}>
+        <Items type="product" items={products} count={productsCount} pagesCount={pagesCount} paginate={true} />
       </div>
     </>
   )
@@ -30,17 +30,17 @@ export const getServerSideProps = async ctx => {
 
   if (token.isAdmin) {
     try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/users?page=1')
+      const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1')
       return {
         props: {
           user: session.user,
-          users: res.data.users,
-          u_pagesCount: res.data.pagesCount,
-          usersCount: res.data.usersCount,
+          products: res.data.products,
+          pagesCount: res.data.pagesCount,
+          productsCount: res.data.productsCount,
         },
       }
     } catch (e) {
-      return { props: { user: session.user, users: null } }
+      return { props: { user: session.user, products: null } }
     }
   } else {
     return { notFound: true }

@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import styles from '../styles/AdminNavbar.module.css'
-import NavIcons from './NavIcon'
+import Icon from './Icon'
 import Search from './Search'
 
 export default function AdminNavbar({ open, handleSidebar, user }) {
@@ -49,7 +49,7 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
             <Link href="/">Shopping</Link>
           </div>
           <Search />
-          <NavIcons title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
+          <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
         </div>
         <div className={styles.right}>
           <div
@@ -63,12 +63,12 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
           <div className={styles.full} onClick={handleScreen}>
             <FontAwesomeIcon icon={faExpand} />
           </div>
-          <NavIcons icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
-          <NavIcons icon={faMessage} items="" counter={23} />
+          <Icon icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
+          <Icon icon={faMessage} items="" counter={23} />
           {image === undefined ? (
-            <NavIcons icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+            <Icon icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
           ) : (
-            <NavIcons image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+            <Icon image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
           )}
         </div>
         <div className={styles.d_sidebar} onClick={handleSidebar}>
@@ -81,7 +81,7 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
           <FontAwesomeIcon icon={faEllipsisVertical} />
         </div>
         <div className={`${styles.dropdown_menu} ${dropdownMenu ? styles.open : undefined}`}>
-          <NavIcons title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
+          <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
           <div
             onClick={() => {
               setTheme(isNight ? 'light' : 'dark')
@@ -93,12 +93,12 @@ export default function AdminNavbar({ open, handleSidebar, user }) {
           <div className={styles.full} onClick={handleScreen}>
             <FontAwesomeIcon icon={faExpand} />
           </div>
-          <NavIcons icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
-          <NavIcons icon={faMessage} items="" counter={23} />
+          <Icon icon={faBell} items={{ setting: 'setting', logout: 'fdafgg' }} counter={3} />
+          <Icon icon={faMessage} items="" counter={23} />
           {image === undefined ? (
-            <NavIcons icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+            <Icon icon={faUser} size="lg" items={{ profile: name, setting: 'setting', logout: 'log out' }} />
           ) : (
-            <NavIcons image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
+            <Icon image={image} items={{ profile: name, setting: 'setting', logout: 'log out' }} />
           )}
         </div>
       </nav>

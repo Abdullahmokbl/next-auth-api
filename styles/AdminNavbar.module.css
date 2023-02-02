@@ -9,6 +9,7 @@
   background-color: var(--background-secondary);
   box-shadow: var(--box-shadow);
   z-index: 9999;
+  text-align: center;
 }
 .left,
 .right {

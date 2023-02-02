@@ -27,6 +27,7 @@
   padding: 2vh;
   margin-top: 2vh;
   text-align: center;
+  border: var(--border);
 }
 .footer input[type='submit'] {
   background-color: black;
