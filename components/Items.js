@@ -9,28 +9,33 @@ import Icon from './Icon'
 import Pagination from './Pagination'
 
 export default function Users(props) {
-  const { type, items, count, pagesCount, paginate } = props
+  const { type, items, count, pagesCount, paginate, limit } = props
   const dispatch = useDispatch()
   const { someUsers } = useSelector(state => state.users)
   const { someProducts } = useSelector(state => state.products)
   const itemsPag = someUsers || someProducts || items
 
   const [page, setPage] = useState(1)
+  console.log(items)
 
   const previous = async () => {
     if (page > 1) {
-      type === 'user' ? await dispatch(getSomeUsers(page - 1)) : await dispatch(getSomeProducts(page - 1))
+      type === 'user'
+        ? await dispatch(getSomeUsers({ page: page - 1, limit }))
+        : await dispatch(getSomeProducts({ page: page - 1, limit }))
       setPage(page - 1)
     }
   }
   const next = async () => {
     if (page < pagesCount) {
-      type === 'user' ? await dispatch(getSomeUsers(page + 1)) : await dispatch(getSomeProducts(page + 1))
+      type === 'user'
+        ? await dispatch(getSomeUsers({ page: page + 1, limit }))
+        : await dispatch(getSomeProducts({ page: page + 1, limit }))
       setPage(page + 1)
     }
   }
 
-  let id = page * 5 - 5
+  let id = page * limit - limit
   const info =
     itemsPag?.length !== 0 &&
     itemsPag?.map(item => {
@@ -75,7 +80,7 @@ export default function Users(props) {
     )
   }
 
-  // const add = 'add_' + type
+  const add = 'add_' + type
   return (
     <>
       <div className={styles.header}>
@@ -83,7 +88,7 @@ export default function Users(props) {
         <Icon icon={faGear} items={{ add: `Add new ${type}`, delete: `Delete all ${type}s` }} />
       </div>
       {items?.length !== 0 ? <Items /> : <h3 className={styles.no}>There is no {type}s</h3>}
-      {paginate && <Pagination page={page} pagesCount={pagesCount} count={count} previous={previous} next={next} />}
+      {paginate && <Pagination page={page} pagesCount={pagesCount} count={count} previous={previous} next={next} limit={limit} />}
     </>
   )
 }

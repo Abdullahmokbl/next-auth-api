@@ -8,6 +8,7 @@ import styles from './products.module.css'
 
 export default function products(props) {
   const { user, products, productsCount, pagesCount } = props
+  console.log(products)
 
   const [open, setOpen] = useState(false)
   const handleSidebar = () => {
@@ -17,7 +18,7 @@ export default function products(props) {
     <>
       <AdminLayout user={user} open={open} handleSidebar={handleSidebar} />
       <div className={`${styles.products} ${open && styles.open}`}>
-        <Items type="product" items={products} count={productsCount} pagesCount={pagesCount} paginate={true} />
+        <Items type="product" items={products} count={productsCount} pagesCount={pagesCount} paginate={true} limit={10} />
       </div>
     </>
   )
@@ -30,7 +31,7 @@ export const getServerSideProps = async ctx => {
 
   if (token.isAdmin) {
     try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1')
+      const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1&&limit=10')
       return {
         props: {
           user: session.user,

@@ -1,10 +1,13 @@
-.pagination{
-    display: flex;
-    justify-content: space-around;
-    margin: 5vh;
+.pagination {
+  display: flex;
+  justify-content: space-around;
+  margin: 5vh;
 }
-.pagination span:nth-child(odd){
-    border-radius: 50%;
-    padding: 10px;
-    cursor: pointer;
+.pagination span:nth-child(odd) {
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+}
+.color {
+  background-color: yellow;
 }
