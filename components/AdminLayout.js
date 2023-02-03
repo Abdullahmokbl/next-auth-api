@@ -1,13 +1,13 @@
-import AdminNavbar from "./AdminNavbar";
-import Sidebar from "./Sidebar";
+import AdminNavbar from './AdminNavbar'
+import Sidebar from './Sidebar'
 
 export default function AdminLayout(props) {
-  const { user, open, handleSidebar } = props;
+  const { open, handleSidebar } = props
   return (
     <>
-      <AdminNavbar user={user} open={open} handleSidebar={handleSidebar} />
-      <div style={{ height: "60px" }}></div>
+      <AdminNavbar open={open} handleSidebar={handleSidebar} />
+      <div style={{ height: '60px' }}></div>
       <Sidebar open={open} />
     </>
-  );
+  )
 }

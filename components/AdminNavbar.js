@@ -10,6 +10,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -18,10 +19,14 @@ import styles from '../styles/AdminNavbar.module.css'
 import Icon from './Icon'
 import Search from './Search'
 
-export default function AdminNavbar({ open, handleSidebar, user }) {
-  const { locale, locales } = useRouter()
+export default function AdminNavbar({ open, handleSidebar }) {
+  const { data: session, status } = useSession()
+  let user = null
+  if (session) user = session.user
+
+  const { locale } = useRouter()
   const lang = locale === 'ar' ? '🇪🇬 Arabic' : '🇺🇸 English'
-  const { name, email, image } = user
+  const { name, email, image } = user || {}
   const [dropdownMenu, setDropdownMenu] = useState(false)
   const [isNight, setIsNight] = useState(false)
   const { theme, setTheme } = useTheme()

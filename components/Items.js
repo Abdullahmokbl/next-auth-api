@@ -16,7 +16,6 @@ export default function Users(props) {
   const itemsPag = someUsers || someProducts || items
 
   const [page, setPage] = useState(1)
-  console.log(items)
 
   const previous = async () => {
     if (page > 1) {

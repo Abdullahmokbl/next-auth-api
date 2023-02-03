@@ -7,8 +7,7 @@ import Items from '../../components/Items'
 import styles from './products.module.css'
 
 export default function products(props) {
-  const { user, products, productsCount, pagesCount } = props
-  console.log(products)
+  const { products, productsCount, pagesCount } = props
 
   const [open, setOpen] = useState(false)
   const handleSidebar = () => {
@@ -16,7 +15,7 @@ export default function products(props) {
   }
   return (
     <>
-      <AdminLayout user={user} open={open} handleSidebar={handleSidebar} />
+      <AdminLayout open={open} handleSidebar={handleSidebar} />
       <div className={`${styles.products} ${open && styles.open}`}>
         <Items type="product" items={products} count={productsCount} pagesCount={pagesCount} paginate={true} limit={10} />
       </div>
@@ -24,26 +23,18 @@ export default function products(props) {
   )
 }
 
-export const getServerSideProps = async ctx => {
-  const session = await getSession(ctx)
-  if (!session) return { notFound: true }
-  const token = await getToken(ctx)
-
-  if (token.isAdmin) {
-    try {
-      const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1&&limit=10')
-      return {
-        props: {
-          user: session.user,
-          products: res.data.products,
-          pagesCount: res.data.pagesCount,
-          productsCount: res.data.productsCount,
-        },
-      }
-    } catch (e) {
-      return { props: { user: session.user, products: null } }
+export const getStaticProps = async () => {
+  try {
+    const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1&&limit=10')
+    return {
+      props: {
+        products: res.data.products,
+        pagesCount: res.data.pagesCount,
+        productsCount: res.data.productsCount,
+      },
+      revalidate: 60,
     }
-  } else {
-    return { notFound: true }
+  } catch (e) {
+    return { props: { products: null } }
   }
 }
