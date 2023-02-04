@@ -64,6 +64,16 @@ export const productsSlice = createSlice({
   initialState: {
     products: [],
     someProducts: null,
+    pageProducts: null,
+  },
+  reducers: {
+    setProducts: (state, action) => {
+      state.products = [...action.payload]
+    },
+    getPageProducts: (state, action) => {
+      const { page, limit } = action.payload
+      state.pageProducts = state.products.slice((page - 1) * limit, limit * page)
+    },
   },
   extraReducers: {
     [addProduct.pending]: state => {},
@@ -90,4 +100,5 @@ export const productsSlice = createSlice({
   },
 })
 
+export const { setProducts, getPageProducts } = productsSlice.actions
 export default productsSlice.reducer

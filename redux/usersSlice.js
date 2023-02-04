@@ -98,12 +98,13 @@ const getFromLocalStorage = key => {
 
 const initialState = {
   users: [],
+  someUsers: null,
+  pageUsers: null,
   user: null,
   cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
   token: null,
   isAuthenticated: false,
   isLoading: null,
-  someUsers: null,
   email: null,
   mobile: null,
 }
@@ -111,6 +112,13 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    setUsers: (state, action) => {
+      state.users = [...action.payload]
+    },
+    getPageUsers: (state, action) => {
+      const { page, limit } = action.payload
+      state.pageUsers = state.users.slice((page - 1) * limit, limit * page)
+    },
     addCart: (state, action) => {
       const items = JSON.parse(localStorage.getItem('cart')) || []
       // console.log(items)
@@ -166,6 +174,6 @@ export const usersSlice = createSlice({
   },
 })
 
-export const { addCart, decCart, delCart } = usersSlice.actions
+export const { setUsers, getPageUsers, addCart, decCart, delCart } = usersSlice.actions
 
 export default usersSlice.reducer

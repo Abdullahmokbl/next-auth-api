@@ -26,7 +26,7 @@ const handler = async (req, res) => {
       })
       .catch(e => console.log(e))
   } else if (req.method === 'GET') {
-    if (!session) return res.status(401).json({ msg: 'Unauthorized' })
+    // if (!session) return res.status(401).json({ msg: 'Unauthorized' })
     User.find()
       .then(users => {
         return res.status(200).json(users)
