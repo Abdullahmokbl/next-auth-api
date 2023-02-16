@@ -61,8 +61,8 @@ const handler = async (req, res) => {
       try {
         const file64 = formatBufferTo64(req.file)
 
-        // console.log(file64);
-        // console.log(file64.content);
+        console.log(file64)
+        console.log(file64.content)
 
         // const d = file64.content;
         // const localFile = "../../../media/d.jpg";

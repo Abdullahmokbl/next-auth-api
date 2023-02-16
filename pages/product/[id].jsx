@@ -3,7 +3,7 @@ import styles from './index.module.css'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner, faStar } from '@fortawesome/free-solid-svg-icons'
-import { addCart, addToCart, decCart, delFromCart } from '../../redux/usersSlice'
+import { addCart, addToCart, decCart, delFromCart } from '../../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { getSession } from 'next-auth/react'
@@ -11,7 +11,7 @@ import { getSession } from 'next-auth/react'
 export default function Product({ product, id }) {
   const dispatch = useDispatch()
   // console.log(user)
-  const { cart } = useSelector(state => state.users)
+  const { cart } = useSelector(state => state.cart)
   // console.log(cart)
   // const exist = user?.cart.find(product => product._id === id);
   const item = cart.find(product => product._id === id)

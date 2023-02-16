@@ -32,6 +32,18 @@ const handler = async (req, res) => {
         return res.status(200).json(users)
       })
       .catch(e => console.log(e))
+  } else if (req.method === 'PUT') {
+    console.log(req.body)
+    console.log(req.data)
+    console.log('dfffff')
+    // const { id, img } = req.body.user
+    // console.log(id)
+    // console.log(img)
+    // User.findByIdAndUpdate(id)
+    //   .then(async user => {
+    //     console.log(user)
+    //   })
+    //   .catch(e => console.log('tt'))
   } else if (req.method === 'DELETE' && req.query.id) {
     if (!session) return res.status(401).json({ msg: 'Unauthorized' })
     const { id } = req.query

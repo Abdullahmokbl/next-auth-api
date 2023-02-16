@@ -60,7 +60,7 @@ export default function Navbar() {
   let user = null
   if (session) user = session.user
 
-  const { cart } = useSelector(state => state.users)
+  const { cart } = useSelector(state => state.cart)
   const [count, setCount] = useState(null)
   useEffect(() => {
     setCount(cart.length)

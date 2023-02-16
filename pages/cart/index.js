@@ -1,48 +1,43 @@
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./index.module.css";
-import { addCart, decCart, delCart } from "../../redux/usersSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { getSession } from 'next-auth/react'
+import Link from 'next/link'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import styles from './index.module.css'
+import { addCart, decCart, delCart } from '../../redux/cartSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import Checkout from '../../components/Checkout'
 
 export default function Cart({ user }) {
-  const dispatch = useDispatch();
-  const [carts, setCarts] = useState(null);
-  const { cart } = useSelector((state) => state.users);
+  const dispatch = useDispatch()
+  const [carts, setCarts] = useState(null)
+  const { cart } = useSelector(state => state.cart)
   // if(cart.length !== 0) return <div>Loading</div>
   useEffect(() => {
-    setCarts(cart);
-  }, [cart]);
-  if (!carts) return <></>;
-  let totalPrice = 0;
-  carts?.map((p) => (totalPrice += p.price * p.qty));
+    setCarts(cart)
+  }, [cart])
+  if (!carts) return <></>
+  let totalPrice = 0
+  carts?.map(p => (totalPrice += p.price * p.qty))
 
   const Items =
     carts?.length > 0 &&
-    carts?.map((item) => {
+    carts?.map(item => {
       return (
         <div className={styles.product} key={item._id}>
-          <Link href={"/product/" + item._id}>
+          <Link href={'/product/' + item._id}>
             <Image src={item.img.url} width={50} height={50} alt="" />
             <h3>{item.name}</h3>
             <div className={styles.price}>${item.price}</div>
           </Link>
           <div>
-            <div
-              className={styles.remove}
-              onClick={() => dispatch(delCart(item._id))}
-            >
+            <div className={styles.remove} onClick={() => dispatch(delCart(item._id))}>
               <FontAwesomeIcon icon={faTrash} />
               Remove
             </div>
             <div className={styles.qty}>
-              <div
-                className={item.qty <= 1 ? "disable" : undefined}
-                onClick={() => dispatch(decCart(item))}
-              >
+              <div className={item.qty <= 1 ? 'disable' : undefined} onClick={() => dispatch(decCart(item))}>
                 -
               </div>
               <span>{item.qty}</span>
@@ -50,23 +45,24 @@ export default function Cart({ user }) {
             </div>
           </div>
         </div>
-      );
-    });
+      )
+    })
 
   const Summary = () => {
     return (
       <div className={styles.summary}>
         <div>CART SUMMARY</div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>Total price :</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
         <div>
-          <a href="/checkout">CHECKOUT(${totalPrice})</a>
+          {/* <a href="/checkout">CHECKOUT(${totalPrice})</a> */}
+          <Checkout cart={cart} />
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const Empty = () => {
     return (
@@ -76,8 +72,8 @@ export default function Cart({ user }) {
           Continue browsing here
         </Link>
       </div>
-    );
-  };
+    )
+  }
   return (
     <div className={`${styles.cart} container navpd`}>
       <h2>Your Cart</h2>
@@ -90,7 +86,7 @@ export default function Cart({ user }) {
         <Empty />
       )}
     </div>
-  );
+  )
 }
 // export default dynamic(() => Promise.resolve(Cart), {
 //   ssr: false,

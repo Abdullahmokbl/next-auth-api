@@ -19,7 +19,6 @@
   font-weight: bold;
 }
 .dropdown {
-  display: none;
   background-color: var(--background-secondary);
   position: absolute;
   width: 10em;
@@ -40,7 +39,4 @@
 }
 .dropdown a:hover {
   background-color: var(--background-hover);
-}
-.dropdown.open {
-  display: block;
 }

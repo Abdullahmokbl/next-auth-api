@@ -1,7 +1,8 @@
 :root {
   /* transition: all .5s ease-in-out; */
   --background-primary: #fff;
-  --background-secondary: #fff;
+  /* --background-secondary: #fff; */
+  --background-secondary: #f0f2f5;
   --background-hover: #e4e6e9;
   /* --background-hover: #303031; */
   /* --background-hover: #ece8ff; */
