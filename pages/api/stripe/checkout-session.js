@@ -3,15 +3,15 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { userId, cart } = req.body
-    console.log(cart)
-    console.log(JSON.stringify(...cart))
-    console.log(JSON.stringify(cart))
+    // console.log(cart)
+    // console.log(JSON.stringify(...cart))
+    // console.log(JSON.stringify(cart))
 
     const customer = await stripe.customers.create({
       description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
       metadata: {
         userId,
-        cart: JSON.stringify(...cart),
+        cart: JSON.stringify({cart}),
       },
     })
 

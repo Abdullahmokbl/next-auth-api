@@ -11,6 +11,15 @@ const axiosConfig = {
   },
 }
 
+export const login = createAsyncThunk('user/login', async (user, { rejectWithValue }) => {
+  // try {
+  //   const res = await axios.post(url + 'login', user, axiosConfig)
+  //   return res.data
+  // } catch (e) {
+  //   return rejectWithValue(e.response.data)
+  // }
+})
+
 export const signup = createAsyncThunk('user/add', async (user, { rejectWithValue }) => {
   try {
     const res = await axios.post(url + 'signup', user, axiosConfig)
@@ -67,38 +76,39 @@ export const delAllUsers = createAsyncThunk('users/del', async (s, { rejectWithV
     return rejectWithValue(e.response.data)
   }
 })
-// export const SearchByEmail = createAsyncThunk('user/forget', async(email, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.post(url+"users/searchByEmail", {email});
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
-// export const createCode = createAsyncThunk('code/create', async({email, mobile}, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.post(url+"code/create", {email, mobile});
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
-// export const verifyCode = createAsyncThunk('code/verify', async({email, code}, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.post(url+"code/verify", {email, code});
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
-// export const sendMail = createAsyncThunk('mail/send', async (email, {rejectWithValue}) => {
-//     try{
-//         const res = await axios.post(url+"mail", email);
-//         return res.data;
-//     }catch(e){
-//         return rejectWithValue(e.response.data);
-//     }
-// })
+
+export const SearchByEmail = createAsyncThunk('user/forget', async (email, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(url + 'users/searchByEmail', { email })
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
+export const createCode = createAsyncThunk('code/create', async ({ email, mobile }, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(url + 'code/create', { email, mobile })
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
+export const verifyCode = createAsyncThunk('code/verify', async ({ email, code }, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(url + 'code/verify', { email, code })
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
+export const sendMail = createAsyncThunk('mail/send', async (email, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(url + 'mail', email)
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
 
 // const getFromLocalStorage = key => {
 //   if (!key || typeof window === 'undefined') {
