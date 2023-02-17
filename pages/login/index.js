@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faFacebookF, faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons'
 import Head from 'next/head'
 import { faEye, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import AsyncButton from '../../components/AsyncButton'
 
 export default function Login({ csrfToken }) {
   const router = useRouter()
@@ -79,13 +80,14 @@ export default function Login({ csrfToken }) {
             <input type="checkbox" name="remember" onChange={handleChange} />
             Remember me?
           </label>
-          <button
+          <AsyncButton title="login" disabled={disabled} />
+          {/* <button
             type="submit"
             disabled={disabled}
             style={disabled ? { opacity: 0.5, cursor: 'initial' } : { opacity: 1, cursor: 'pointer' }}
           >
             {disabled ? <FontAwesomeIcon icon={faSpinner} size="xl" spin /> : 'Login'}
-          </button>
+          </button> */}
         </form>
         <div className={styles.forget}>
           <Link href="identify">Forget password?</Link>

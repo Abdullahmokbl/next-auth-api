@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -9,7 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import Checkout from '../../components/Checkout'
 
-export default function Cart({ user }) {
+export default function Cart() {
+  const { data: session } = useSession()
+  const user = session?.user
+  // console.log(user)
+
   const dispatch = useDispatch()
   const [carts, setCarts] = useState(null)
   const { cart } = useSelector(state => state.cart)
@@ -58,7 +62,7 @@ export default function Cart({ user }) {
         </div>
         <div>
           {/* <a href="/checkout">CHECKOUT(${totalPrice})</a> */}
-          <Checkout cart={cart} />
+          <Checkout cart={cart} userId={user?.id} />
         </div>
       </div>
     )

@@ -19,6 +19,14 @@ export const delFromCart = createAsyncThunk('cart/del', async (cart, { rejectWit
     return rejectWithValue(e.response.data)
   }
 })
+export const clearAllCart = createAsyncThunk('cart/clear', async (cart, { rejectWithValue }) => {
+  try {
+    const res = await axios.delete(url + 'cart', { data: cart, headers: axiosConfig.headers })
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
 
 const getFromLocalStorage = key => {
   if (!key || typeof window === 'undefined') {
@@ -64,6 +72,10 @@ const cartSlice = createSlice({
       localStorage.setItem('cart', JSON.stringify(newItems))
       state.cart = [...state.cart].filter(product => product._id !== action.payload)
     },
+    clearCart: (state, action) => {
+      localStorage.removeItem('cart')
+      state.cart = []
+    },
   },
   extraReducers: {
     [addToCart.fulfilled]: (state, action) => {
@@ -72,9 +84,12 @@ const cartSlice = createSlice({
     [delFromCart.fulfilled]: (state, action) => {
       state.cart = [...state.cart].filter(product => product._id !== action.payload)
     },
+    [clearAllCart.fulfilled]: (state, action) => {
+      state.cart = [...state.cart].filter(product => product._id !== action.payload)
+    },
   },
 })
 
-export const { addCart, decCart, delCart } = cartSlice.actions
+export const { addCart, decCart, delCart, clearCart } = cartSlice.actions
 
 export default cartSlice.reducer

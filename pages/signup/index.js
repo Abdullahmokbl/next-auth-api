@@ -1,44 +1,45 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import styles from "./index.module.css";
-import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle, faFacebookF, faLinkedinIn, faGithub } from "@fortawesome/free-brands-svg-icons";
-import Head from "next/head";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
-import { signup } from "../../redux/usersSlice";
+import React, { useState } from 'react'
+import Link from 'next/link'
+import styles from './index.module.css'
+import { useRouter } from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGoogle, faFacebookF, faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons'
+import Head from 'next/head'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux'
+import { signup } from '../../redux/usersSlice'
+import AsyncButton from '../../components/AsyncButton'
 
 export default function Signup() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState(false);
-  const [error, setError] = useState("");
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const [disabled, setDisabled] = useState(false)
+  const [error, setError] = useState('')
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    gender: "male",
-  });
+    name: '',
+    email: '',
+    password: '',
+    gender: 'male',
+  })
 
   const handleChange = e => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = e => {
-    e.preventDefault();
-    setDisabled(true);
+    e.preventDefault()
+    setDisabled(true)
     dispatch(signup(user))
       .unwrap()
-      .then(() => router.push("/login"))
+      .then(() => router.push('/login'))
       .catch(e => {
-        setDisabled(false);
-        setError(e.msg);
-      });
-  };
+        setDisabled(false)
+        setError(e.msg)
+      })
+  }
 
   return (
     <div className={styles.page}>
@@ -61,25 +62,19 @@ export default function Signup() {
             <input type="radio" name="gender" value="female" />
             Female
           </label>
-          <button
-            type="submit"
-            disabled={disabled}
-            style={disabled ? { opacity: 0.5, cursor: "initial" } : { opacity: 1, cursor: "pointer" }}
-          >
-            {disabled ? <FontAwesomeIcon icon={faSpinner} size="xl" spin /> : "Sign Up"}
-          </button>
+          <AsyncButton title="Sign Up" disabled={disabled} />
         </form>
         <div className={styles.or}>
           <span>OR</span>
         </div>
         <div className={styles.svg}>
-          <a onClick={() => signIn("google", { callbackUrl: "/" })}>
+          <a onClick={() => signIn('google', { callbackUrl: '/' })}>
             <FontAwesomeIcon icon={faGoogle} size="xl" />
           </a>
-          <a onClick={() => signIn("facebook", { callbackUrl: "/" })}>
+          <a onClick={() => signIn('facebook', { callbackUrl: '/' })}>
             <FontAwesomeIcon icon={faFacebookF} size="xl" />
           </a>
-          <a onClick={() => signIn("github", { callbackUrl: "/" })}>
+          <a onClick={() => signIn('github', { callbackUrl: '/' })}>
             <FontAwesomeIcon icon={faGithub} size="xl" />
           </a>
         </div>
@@ -88,5 +83,5 @@ export default function Signup() {
         </div>
       </div>
     </div>
-  );
+  )
 }
