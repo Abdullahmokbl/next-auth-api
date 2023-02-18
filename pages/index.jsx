@@ -6,7 +6,8 @@ import Alert from '../components/Alert'
 import { useRouter } from 'next/router'
 
 Shopping.title = 'fff'
-export default function Shopping({ products }) {
+export default function Shopping() {
+  const products = null
   const router = useRouter()
   const { type, msg } = router.query
   return (
@@ -37,24 +38,24 @@ export default function Shopping({ products }) {
   )
 }
 
-export const getServerSideProps = async () => {
-  try {
-    const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
-    return {
-      props: {
-        // session,
-        products: res.data,
-      },
-    }
-  } catch (e) {
-    return {
-      props: {
-        // session,
-        products: null,
-      },
-    }
-  }
-}
+// export const getServerSideProps = async () => {
+//   try {
+//     const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
+//     return {
+//       props: {
+//         // session,
+//         products: res.data,
+//       },
+//     }
+//   } catch (e) {
+//     return {
+//       props: {
+//         // session,
+//         products: null,
+//       },
+//     }
+//   }
+// }
 // export const getStaticProps = async () => {
 //   // const session = await getSession(ctx)
 //   try {
