@@ -1,9 +1,9 @@
-// import { loadStripe } from '@stripe/stripe-js'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import AsyncButton from './AsyncButton'
 
+// import { loadStripe } from '@stripe/stripe-js'
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export default function Checkout({ cart, userId }) {
@@ -13,9 +13,11 @@ export default function Checkout({ cart, userId }) {
     try {
       if (!userId) router.push('/login')
       setDisabled(true)
+      // first way
       // const stripe = await stripePromise
       // const checkoutSession = await axios.post('/api/stripe/checkout-session', {
       //   cart,
+      //   userId,
       // })
       // const result = await stripe.redirectToCheckout({
       //   sessionId: checkoutSession.data.id,
@@ -23,6 +25,7 @@ export default function Checkout({ cart, userId }) {
       // if (result.error) {
       //   alert(result.error.message)
       // }
+      // second way
       const res = await axios.post('/api/stripe/checkout-session', {
         cart,
         userId,

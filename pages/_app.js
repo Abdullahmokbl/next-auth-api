@@ -26,12 +26,12 @@ const arabic = Noto_Naskh_Arabic({ subsets: ['latin'] })
 
 const theme = 'dark'
 
-const initialOptions = {
-  'client-id': process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
-  // currency: 'USD',
-  // intent: 'capture',
-  // 'data-client-token': process.env.PAYPAL_CLIENT_SECRET,
-}
+// const initialOptions = {
+//   'client-id': process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+//   // currency: 'USD',
+//   // intent: 'capture',
+//   // 'data-client-token': process.env.PAYPAL_CLIENT_SECRET,
+// }
 function MyApp({ Component, ...rest }) {
   const { locale } = useRouter()
 
@@ -49,14 +49,14 @@ function MyApp({ Component, ...rest }) {
     <Provider store={store}>
       <SessionProvider session={props.pageProps.session}>
         <ThemeProvider>
-          <PayPalScriptProvider options={initialOptions}>
-            <Meta title={Component.name} />
-            <main dir={locale === 'ar' ? 'rtl' : 'ltr'} className={locale === 'ar' ? arabic.className : nunito.className}>
-              <Layout>
-                <Component {...props.pageProps} />
-              </Layout>
-            </main>
-          </PayPalScriptProvider>
+          {/* <PayPalScriptProvider options={initialOptions}> */}
+          <Meta title={Component.name} />
+          <main dir={locale === 'ar' ? 'rtl' : 'ltr'} className={locale === 'ar' ? arabic.className : nunito.className}>
+            <Layout>
+              <Component {...props.pageProps} />
+            </Layout>
+          </main>
+          {/* </PayPalScriptProvider> */}
         </ThemeProvider>
       </SessionProvider>
     </Provider>

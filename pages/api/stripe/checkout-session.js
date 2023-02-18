@@ -3,19 +3,12 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { userId, cart } = req.body
-    // console.log(cart)
-    // console.log(JSON.stringify(cart.map(i => i)))
-    // console.log(cart.map(i => JSON.stringify(i)))
-    // console.log(JSON.stringify(cart))
-    // console.log(`[${JSON.stringify(cart)}]`)
-    // console.log(JSON.stringify({ cart }))
-    // console.log(JSON.stringify(cart))
 
     const customer = await stripe.customers.create({
       description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
       metadata: {
         userId,
-        cart: JSON.stringify(...cart),
+        products: JSON.stringify(cart.map(i => ({ id: i._id, qty: i.qty }))),
       },
     })
 
@@ -67,10 +60,13 @@ export default async function handler(req, res) {
         // ],
         line_items,
         customer: customer.id,
+        locale: 'auto',
         mode: 'payment',
         success_url: `${req.headers.origin}/checkout_success`,
         cancel_url: `${req.headers.origin}/cart`,
       })
+      console.log(session)
+      // res.status(200).json({ id: session.id })
       res.json({ url: session.url })
     } catch (e) {
       return res.status(e.statusCode || 500).json(e.message)

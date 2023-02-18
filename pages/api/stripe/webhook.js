@@ -13,14 +13,13 @@ export const config = {
 }
 
 const createOrder = async (customer, data) => {
-  const cart = JSON.parse(customer.metadata.cart)
-  console.log(cart)
+  const products = JSON.parse(customer.metadata.products)
 
   const newOrder = new Order({
     userId: customer.metadata.userId,
     customerId: data.customer,
     paymentIntentId: data.payment_intent,
-    products: cart,
+    products,
     subtotal: data.amount_subtotal,
     total: data.amount_total,
     shipping: data.customer_details,
