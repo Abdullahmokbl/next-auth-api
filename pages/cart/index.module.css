@@ -31,7 +31,7 @@
 }
 .product:not(:last-child) {
   margin-bottom: 2em;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 }
 .product > div:first-child {
   cursor: pointer;

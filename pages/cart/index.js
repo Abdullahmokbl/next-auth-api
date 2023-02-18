@@ -60,10 +60,10 @@ export default function Cart() {
           <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
-        <div>
-          {/* <a href="/checkout">CHECKOUT(${totalPrice})</a> */}
-          <Checkout cart={cart} userId={user?.id} />
-        </div>
+        <Checkout cart={cart} userId={user?.id} />
+        {/* <div>
+          <a href="/checkout">CHECKOUT(${totalPrice})</a>
+        </div> */}
       </div>
     )
   }
@@ -80,7 +80,7 @@ export default function Cart() {
   }
   return (
     <div className={`${styles.cart} container navpd`}>
-      <h2>Your Cart</h2>
+      {/* <h2>Your Cart</h2> */}
       {Items ? (
         <div className={styles.items}>
           <div className={styles.products}>{Items}</div>

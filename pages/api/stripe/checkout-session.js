@@ -4,14 +4,18 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { userId, cart } = req.body
     // console.log(cart)
-    // console.log(JSON.stringify(...cart))
+    // console.log(JSON.stringify(cart.map(i => i)))
+    // console.log(cart.map(i => JSON.stringify(i)))
+    // console.log(JSON.stringify(cart))
+    // console.log(`[${JSON.stringify(cart)}]`)
+    // console.log(JSON.stringify({ cart }))
     // console.log(JSON.stringify(cart))
 
     const customer = await stripe.customers.create({
       description: 'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
       metadata: {
         userId,
-        cart: JSON.stringify({cart}),
+        cart: JSON.stringify(...cart),
       },
     })
 

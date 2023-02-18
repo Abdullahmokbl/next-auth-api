@@ -11,14 +11,14 @@ const axiosConfig = {
   },
 }
 
-export const login = createAsyncThunk('user/login', async (user, { rejectWithValue }) => {
-  // try {
-  //   const res = await axios.post(url + 'login', user, axiosConfig)
-  //   return res.data
-  // } catch (e) {
-  //   return rejectWithValue(e.response.data)
-  // }
-})
+// export const login = createAsyncThunk('user/login', async (user, { rejectWithValue }) => {
+//   // try {
+//   //   const res = await axios.post(url + 'login', user, axiosConfig)
+//   //   return res.data
+//   // } catch (e) {
+//   //   return rejectWithValue(e.response.data)
+//   // }
+// })
 
 export const signup = createAsyncThunk('user/add', async (user, { rejectWithValue }) => {
   try {
