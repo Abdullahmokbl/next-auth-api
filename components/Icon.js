@@ -8,7 +8,7 @@ import useComponentVisible from './useComponentVisible'
 
 export default function Icon({ icon, size, title, image, counter, items }) {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
-  const { locales, pathname } = useRouter()
+  const { locales, asPath } = useRouter()
 
   return (
     <div className={styles.icon}>
@@ -27,7 +27,7 @@ export default function Icon({ icon, size, title, image, counter, items }) {
           {Object.entries(items).map(([key, value]) => (
             <Link
               key={key}
-              href={locales.includes(key) ? pathname : '/' + key}
+              href={locales.includes(key) ? asPath : '/' + key}
               locale={key}
               onClick={() => key === 'logout' && signOut({ callbackUrl: '/login' })}
             >
