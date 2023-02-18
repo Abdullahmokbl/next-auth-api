@@ -109,7 +109,7 @@ export default function Product({ product, id }) {
 //   }
 // }
 export const getStaticPaths = async () => {
-  const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
+  // const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
   // const paths = res.data.map(item => {
   //   return {params: {id: item._id}}
   // })

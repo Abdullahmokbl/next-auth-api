@@ -37,26 +37,7 @@ export default function Shopping({ products }) {
   )
 }
 
-export const getServerSideProps = async () => {
-  try {
-    const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
-    return {
-      props: {
-        // session,
-        products: res.data,
-      },
-    }
-  } catch (e) {
-    return {
-      props: {
-        // session,
-        products: null,
-      },
-    }
-  }
-}
-// export const getStaticProps = async () => {
-//   // const session = await getSession(ctx)
+// export const getServerSideProps = async () => {
 //   try {
 //     const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
 //     return {
@@ -64,7 +45,6 @@ export const getServerSideProps = async () => {
 //         // session,
 //         products: res.data,
 //       },
-//       revalidate: 60,
 //     }
 //   } catch (e) {
 //     return {
@@ -75,3 +55,23 @@ export const getServerSideProps = async () => {
 //     }
 //   }
 // }
+export const getStaticProps = async () => {
+  // const session = await getSession(ctx)
+  try {
+    const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
+    return {
+      props: {
+        // session,
+        products: res.data,
+      },
+      revalidate: 60,
+    }
+  } catch (e) {
+    return {
+      props: {
+        // session,
+        products: null,
+      },
+    }
+  }
+}
