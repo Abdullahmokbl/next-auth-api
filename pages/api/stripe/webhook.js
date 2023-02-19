@@ -1,6 +1,6 @@
 import { buffer } from 'micro'
-import connectDB from '../backend/mongodb'
-import Order from '../backend/order'
+import connectDB from '../database/mongodb'
+import Order from '../models/order'
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.

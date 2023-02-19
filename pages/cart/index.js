@@ -4,30 +4,31 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.css'
-import { addCart, decCart, delCart } from '../../redux/cartSlice'
+import { addToCart, decItemInCart, delFromCart } from '../../redux/cartSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import Checkout from '../../components/Checkout'
+import axios from 'axios'
 
-export default function Cart() {
-  const { data: session } = useSession()
-  const user = session?.user
+export default function Cart({ cart, userId }) {
+  // const { data: session } = useSession()
+  // const user = session?.user
   // console.log(user)
 
   const dispatch = useDispatch()
-  const [carts, setCarts] = useState(null)
-  const { cart } = useSelector(state => state.cart)
+  // const [carts, setCarts] = useState(null)
+  // const { cart } = useSelector(state => state.cart)
   // if(cart.length !== 0) return <div>Loading</div>
-  useEffect(() => {
-    setCarts(cart)
-  }, [cart])
-  if (!carts) return <></>
+  // useEffect(() => {
+  //   setCarts(cart)
+  // }, [cart])
+  // if (!carts) return <></>
   let totalPrice = 0
-  carts?.map(p => (totalPrice += p.price * p.qty))
+  cart?.map(p => (totalPrice += p.price * p.qty))
 
   const Items =
-    carts?.length > 0 &&
-    carts?.map(item => {
+    cart?.length > 0 &&
+    cart?.map(item => {
       return (
         <div className={styles.product} key={item._id}>
           <Link href={'/product/' + item._id}>
@@ -36,16 +37,16 @@ export default function Cart() {
             <div className={styles.price}>${item.price}</div>
           </Link>
           <div>
-            <div className={styles.remove} onClick={() => dispatch(delCart(item._id))}>
+            <div className={styles.remove} onClick={() => dispatch(delFromCart(item._id))}>
               <FontAwesomeIcon icon={faTrash} />
               Remove
             </div>
             <div className={styles.qty}>
-              <div className={item.qty <= 1 ? 'disable' : undefined} onClick={() => dispatch(decCart(item))}>
+              <div className={item.qty <= 1 ? 'disable' : undefined} onClick={() => dispatch(decItemInCart(item))}>
                 -
               </div>
               <span>{item.qty}</span>
-              <div onClick={() => dispatch(addCart(item))}>+</div>
+              <div onClick={() => dispatch(addToCart(item))}>+</div>
             </div>
           </div>
         </div>
@@ -60,7 +61,7 @@ export default function Cart() {
           <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
-        <Checkout cart={cart} userId={user?.id} />
+        <Checkout cart={cart} userId={userId} />
         {/* <div>
           <a href="/checkout">CHECKOUT(${totalPrice})</a>
         </div> */}
@@ -92,14 +93,21 @@ export default function Cart() {
     </div>
   )
 }
-// export default dynamic(() => Promise.resolve(Cart), {
-//   ssr: false,
-// });
 
-// export const getServerSideProps = async (ctx) => {
-//   const session = await getSession(ctx);
-//   if(!session) return{props:{}}
-//   return{
-//     props: {user: session.user}
-//   }
-// }
+export const getServerSideProps = async ctx => {
+  const session = await getSession(ctx)
+  let user = null
+  if (session) user = session.user
+
+  try {
+    const res = await axios.get(process.env.NEXT_PUBLIC_API + '/cart?userId=' + user.id)
+
+    return {
+      props: { cart: res.data, userId: user.id },
+    }
+  } catch (e) {
+    return {
+      props: { cart: null },
+    }
+  }
+}

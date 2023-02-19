@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react'
-import connectDB from './backend/mongodb'
-import Product from './backend/product'
+import connectDB from './database/mongodb'
+import Product from './models/product'
 const { cloudinaryUpload, cloudinaryDestroy } = require('../../utils/cloudinary')
 const { formatBufferTo64 } = require('../../utils/data-uri')
 const { upload } = require('../../utils/multer')

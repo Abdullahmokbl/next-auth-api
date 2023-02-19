@@ -65,7 +65,7 @@ export default async function handler(req, res) {
         success_url: `${req.headers.origin}/checkout_success`,
         cancel_url: `${req.headers.origin}/cart`,
       })
-      console.log(session)
+      // console.log(session)
       // res.status(200).json({ id: session.id })
       res.json({ url: session.url })
     } catch (e) {

@@ -11,6 +11,14 @@ export const addToCart = createAsyncThunk('cart/add', async (cart, { rejectWithV
     return rejectWithValue(e.response.data)
   }
 })
+export const decItemInCart = createAsyncThunk('cart/del', async (cart, { rejectWithValue }) => {
+  try {
+    const res = await axios.put(url + 'cart', { data: cart, headers: axiosConfig.headers })
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
 export const delFromCart = createAsyncThunk('cart/del', async (cart, { rejectWithValue }) => {
   try {
     const res = await axios.delete(url + 'cart', { data: cart, headers: axiosConfig.headers })
@@ -28,15 +36,16 @@ export const clearAllCart = createAsyncThunk('cart/clear', async (cart, { reject
   }
 })
 
-const getFromLocalStorage = key => {
-  if (!key || typeof window === 'undefined') {
-    return ''
-  }
-  return localStorage.getItem(key)
-}
+// const getFromLocalStorage = key => {
+//   if (!key || typeof window === 'undefined') {
+//     return ''
+//   }
+//   return localStorage.getItem(key)
+// }
 
 const initialState = {
-  cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
+  cart: [],
+  // cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
 }
 
 const cartSlice = createSlice({
@@ -72,7 +81,7 @@ const cartSlice = createSlice({
       localStorage.setItem('cart', JSON.stringify(newItems))
       state.cart = [...state.cart].filter(product => product._id !== action.payload)
     },
-    clearCart: (state, action) => {
+    clearCart: state => {
       localStorage.removeItem('cart')
       state.cart = []
     },
@@ -81,11 +90,14 @@ const cartSlice = createSlice({
     [addToCart.fulfilled]: (state, action) => {
       state.cart = [...state.cart, action.payload]
     },
+    [decItemInCart.fulfilled]: (state, action) => {
+      // state.cart = [...state.cart].filter(product => product._id !== action.payload)
+    },
     [delFromCart.fulfilled]: (state, action) => {
       state.cart = [...state.cart].filter(product => product._id !== action.payload)
     },
-    [clearAllCart.fulfilled]: (state, action) => {
-      state.cart = [...state.cart].filter(product => product._id !== action.payload)
+    [clearAllCart.fulfilled]: state => {
+      state.cart = []
     },
   },
 })

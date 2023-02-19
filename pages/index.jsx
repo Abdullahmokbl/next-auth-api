@@ -1,7 +1,6 @@
 import styles from './index.module.css'
 import Products from '../components/Products'
 import axios from 'axios'
-import { getSession } from 'next-auth/react'
 import Alert from '../components/Alert'
 import { useRouter } from 'next/router'
 
@@ -37,41 +36,16 @@ export default function Shopping({ products }) {
   )
 }
 
-// export const getServerSideProps = async () => {
-//   try {
-//     const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
-//     return {
-//       props: {
-//         // session,
-//         products: res.data,
-//       },
-//     }
-//   } catch (e) {
-//     return {
-//       props: {
-//         // session,
-//         products: null,
-//       },
-//     }
-//   }
-// }
 export const getStaticProps = async () => {
-  // const session = await getSession(ctx)
   try {
     const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
     return {
-      props: {
-        // session,
-        products: res.data,
-      },
+      props: { products: res.data },
       revalidate: 60,
     }
   } catch (e) {
     return {
-      props: {
-        // session,
-        products: null,
-      },
+      props: { products: null },
     }
   }
 }

@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react'
-import connectDB from './backend/mongodb'
-import User from './backend/user'
+import connectDB from './database/mongodb'
+import User from './models/user'
 
 export const config = {
   api: {

@@ -4,12 +4,12 @@ import { faBasketShopping, faMoneyBill, faSackDollar, faUserPlus } from '@fortaw
 import axios from 'axios'
 import { getSession } from 'next-auth/react'
 import { getToken } from 'next-auth/jwt'
-import Card from '../../components/Card'
-import Cards from '../../components/Cards'
+import Card from '../../../components/Card'
+import Cards from '../../../components/Cards'
 import { Bar, Line, Pie } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
-import AdminLayout from '../../components/AdminLayout'
-import Items from '../../components/Items'
+import AdminLayout from '../../../components/AdminLayout'
+import Items from '../../../components/Items'
 
 export default function Admin(props) {
   const { user, users, usersCount, u_pagesCount } = props

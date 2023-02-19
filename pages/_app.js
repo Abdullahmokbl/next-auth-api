@@ -14,9 +14,9 @@ config.autoAddCss = false
 
 // next/font
 import { Nunito, Noto_Naskh_Arabic } from '@next/font/google'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
-import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const nunito = Nunito({
   subsets: ['latin'],
