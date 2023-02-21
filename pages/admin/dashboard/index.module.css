@@ -1,20 +1,6 @@
 .admin {
   text-align: center;
 }
-.main {
-  width: 100%;
-  padding: 4em;
-  transition: all 0.5s ease-in-out;
-}
-.main:dir(ltr) {
-  float: right;
-}
-.main:dir(rtl) {
-  float: left;
-}
-.main.open {
-  width: calc(100% - 200px);
-}
 .year_sales {
   width: 700px;
   height: 100%;
@@ -148,9 +134,3 @@
     .admin ul li{padding: 1vh;}
     .del_all{width: 50%;}
 } */
-
-@media only screen and (max-width: 600px) {
-  .main.open {
-    width: 100%;
-  }
-}

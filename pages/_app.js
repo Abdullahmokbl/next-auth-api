@@ -16,6 +16,7 @@ config.autoAddCss = false
 import { Nunito, Noto_Naskh_Arabic } from '@next/font/google'
 // import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
+import AdminLayout from './admin/components/AdminLayout'
 // import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const nunito = Nunito({
@@ -33,7 +34,7 @@ const theme = 'dark'
 //   // 'data-client-token': process.env.PAYPAL_CLIENT_SECRET,
 // }
 function MyApp({ Component, ...rest }) {
-  const { locale } = useRouter()
+  const { locale, pathname } = useRouter()
 
   // useEffect(() => {
   //   if (locale === "ar") {
@@ -52,9 +53,15 @@ function MyApp({ Component, ...rest }) {
           {/* <PayPalScriptProvider options={initialOptions}> */}
           <Meta title={Component.name} />
           <main dir={locale === 'ar' ? 'rtl' : 'ltr'} className={locale === 'ar' ? arabic.className : nunito.className}>
-            <Layout>
-              <Component {...props.pageProps} />
-            </Layout>
+            {pathname.startsWith('/admin') ? (
+              <AdminLayout>
+                <Component {...props.pageProps} />
+              </AdminLayout>
+            ) : (
+              <Layout>
+                <Component {...props.pageProps} />
+              </Layout>
+            )}
           </main>
           {/* </PayPalScriptProvider> */}
         </ThemeProvider>

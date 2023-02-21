@@ -166,7 +166,7 @@ export default function Add({ user }) {
       </form>
     )
   }
-  return <div className={`${styles.add} container navpd`}>{user ? form() : login()}</div>
+  return <div className={styles.add}>{user ? form() : login()}</div>
 }
 
 export const getServerSideProps = async ctx => {

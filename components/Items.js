@@ -1,41 +1,27 @@
 import { faEdit, faGear, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPageProducts, getSomeProducts } from '../redux/productsSlice'
-import { delUser, getSomeUsers, getPageUsers } from '../redux/usersSlice'
+import { delUser } from '../redux/usersSlice'
 import styles from '../styles/Items.module.css'
 import Icon from './Icon'
 import Pagination from './Pagination'
 import Image from 'next/image'
 
-export default function Users(props) {
+export default function Items(props) {
   const { type, items, count, pagesCount, paginate, limit = 5 } = props
+  const { getPageItems } = require(`../redux/${type}sSlice`)
+  const { page, pageItems } = useSelector(state => state[type + 's'])
+  const itemsPag = pageItems || items
+
   const dispatch = useDispatch()
-  const { someUsers, pageUsers } = useSelector(state => state.users)
-  const { someProducts, pageProducts } = useSelector(state => state.products)
-  const itemsPag = pageUsers || pageProducts || items
-
-  const [page, setPage] = useState(1)
-
   const previous = async () => {
     if (page > 1) {
-      type === 'user'
-        ? // ? await dispatch(getSomeUsers({ page: page - 1, limit }))
-          await dispatch(getPageUsers({ page: page - 1, limit }))
-        : // : await dispatch(getSomeProducts({ page: page - 1, limit }))
-          await dispatch(getPageProducts({ page: page - 1, limit }))
-      setPage(page - 1)
+      await dispatch(getPageItems({ page: page - 1, limit }))
     }
   }
   const next = async () => {
     if (page < pagesCount) {
-      type === 'user'
-        ? // ? await dispatch(getSomeUsers({ page: page + 1, limit }))
-          await dispatch(getPageUsers({ page: page + 1, limit }))
-        : // : await dispatch(getSomeProducts({ page: page + 1, limit }))
-          await dispatch(getPageProducts({ page: page + 1, limit }))
-      setPage(page + 1)
+      await dispatch(getPageItems({ page: page + 1, limit }))
     }
   }
 

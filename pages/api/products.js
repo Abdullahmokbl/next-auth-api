@@ -5,8 +5,8 @@ const { cloudinaryUpload, cloudinaryDestroy } = require('../../utils/cloudinary'
 const { formatBufferTo64 } = require('../../utils/data-uri')
 const { upload } = require('../../utils/multer')
 
-import { RemoveBgResult, RemoveBgError, removeBackgroundFromImageBase64 } from 'remove.bg'
-import * as fs from 'fs'
+// import { RemoveBgResult, RemoveBgError, removeBackgroundFromImageBase64 } from 'remove.bg'
+// import * as fs from 'fs'
 
 export const config = {
   api: {

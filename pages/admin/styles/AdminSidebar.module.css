@@ -6,6 +6,7 @@
   transition: all 0.5s ease-in-out;
   text-align: center;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04);
+  z-index: 999999;
 }
 .sidebar:dir(ltr) {
   left: -200px;

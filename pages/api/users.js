@@ -5,6 +5,8 @@ import User from './models/user'
 export const config = {
   api: {
     bodyParser: false,
+    // API resolved without sending a response for //api/products?page=1, this may result in stalled requests.
+    externalResolver: true,
   },
 }
 
@@ -22,9 +24,11 @@ const handler = async (req, res) => {
       .then(users => {
         const usersCount = count
         const pagesCount = Math.ceil(usersCount / limit)
-        return res.json({ users, pagesCount, usersCount })
+        return res.status(200).json({ users, pagesCount, usersCount })
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        return res.status(500).send('errr')
+      })
   } else if (req.method === 'GET') {
     // if (!session) return res.status(401).json({ msg: 'Unauthorized' })
     User.find()
@@ -68,6 +72,8 @@ const handler = async (req, res) => {
         console.log(e)
         return res.json({ succeed: false })
       })
+  } else {
+    res.status(422).send('req_method_not_supported')
   }
 }
 

@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 // import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
+const url = '/api/'
+
 const addToken = () => {
   // get token
   // const token = getCookie('token')
@@ -32,19 +34,19 @@ export const addProduct = createAsyncThunk('product/add', async (product, { reje
   // if (token) axiosConfig.headers['x-auth-token'] = token;
 
   try {
-    const res = await axios.post(process.env.NEXT_PUBLIC_API + '/products', product, axiosConfig)
+    const res = await axios.post(url + '/products', product, axiosConfig)
     return res.data
   } catch (e) {
     return rejectWithValue(e.response.data)
   }
 })
-export const getSomeProducts = createAsyncThunk('products/some', async ({ page, limit }) => {
-  const res = await axios.get(process.env.NEXT_PUBLIC_API + '/products?page=' + page + '&limit=' + limit, addToken())
+export const getSomeItems = createAsyncThunk('products/some', async ({ page, limit }) => {
+  const res = await axios.get(url + '/products?page=' + page + '&limit=' + limit, addToken())
   return res.data
 })
 export const delProduct = createAsyncThunk('product/del', async (id, { rejectWithValue }) => {
   try {
-    const res = await axios.delete(process.env.NEXT_PUBLIC_API + '/products?id=' + id)
+    const res = await axios.delete(url + '/products?id=' + id)
     return res.data
   } catch (e) {
     return rejectWithValue(e.response.data)
@@ -52,7 +54,7 @@ export const delProduct = createAsyncThunk('product/del', async (id, { rejectWit
 })
 export const delAllProducts = createAsyncThunk('products/del', async (s, { rejectWithValue }) => {
   try {
-    const res = await axios.delete(process.env.NEXT_PUBLIC_API + '/products', addToken())
+    const res = await axios.delete(url + '/products', addToken())
     return res.data
   } catch (e) {
     return rejectWithValue(e.response.data)
@@ -63,16 +65,18 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
-    someProducts: null,
-    pageProducts: null,
+    someItems: null,
+    page: 1,
+    pageItems: null,
   },
   reducers: {
     setProducts: (state, action) => {
       state.products = [...action.payload]
     },
-    getPageProducts: (state, action) => {
+    getPageItems: (state, action) => {
       const { page, limit } = action.payload
-      state.pageProducts = state.products.slice((page - 1) * limit, limit * page)
+      state.page = page
+      state.pageItems = state.products.slice((page - 1) * limit, limit * page)
     },
   },
   extraReducers: {
@@ -81,24 +85,24 @@ export const productsSlice = createSlice({
       state.products.push(action.payload)
     },
     [addProduct.rejected]: (state, error) => {},
-    [getSomeProducts.fulfilled]: (state, action) => {
-      state.someProducts = action.payload.products
+    [getSomeItems.fulfilled]: (state, action) => {
+      state.someItems = action.payload.products
     },
     [delProduct.pending]: state => {},
     [delProduct.fulfilled]: (state, action) => {
       return {
         ...state,
-        someProducts: [...state.someProducts].filter(p => p._id !== action.payload.id),
+        someItems: [...state.someItems].filter(p => p._id !== action.payload.id),
       }
     },
     [delProduct.rejected]: (state, error) => {},
     [delAllProducts.pending]: state => {},
     [delAllProducts.fulfilled]: (state, action) => {
-      state.someProducts = []
+      state.someItems = []
     },
     [delAllProducts.rejected]: (state, error) => {},
   },
 })
 
-export const { setProducts, getPageProducts } = productsSlice.actions
+export const { setProducts, getPageItems } = productsSlice.actions
 export default productsSlice.reducer

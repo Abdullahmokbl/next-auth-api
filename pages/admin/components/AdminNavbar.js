@@ -15,9 +15,9 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import styles from '../styles/AdminNavbar.module.css'
-import Icon from './Icon'
-import Search from './Search'
+import styles from '../../../styles/AdminNavbar.module.css'
+import Icon from '../../../components/Icon'
+import Search from '../../../components/Search'
 
 export default function AdminNavbar({ open, handleSidebar }) {
   const { data: session, status } = useSession()

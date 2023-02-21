@@ -8,16 +8,11 @@ import Card from '../../../components/Card'
 import Cards from '../../../components/Cards'
 import { Bar, Line, Pie } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
-import AdminLayout from '../../../components/AdminLayout'
 import Items from '../../../components/Items'
 
 export default function Admin(props) {
   const { user, users, usersCount, u_pagesCount } = props
 
-  const [open, setOpen] = useState(false)
-  const handleSidebar = () => {
-    setOpen(!open)
-  }
   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const data = {
     labels,
@@ -100,36 +95,33 @@ export default function Admin(props) {
 
   return (
     <div className={styles.admin}>
-      <AdminLayout user={user} open={open} handleSidebar={handleSidebar} />
-      <div className={`${styles.main} ${open && styles.open}`}>
-        <Cards>
-          <Card icon={faUserPlus} text={'New Leads'} number={205} />
-          <Card icon={faSackDollar} text={'Sales'} number={'$4021'} />
-          <Card icon={faBasketShopping} text={'Orders'} number={80} />
-          <Card icon={faMoneyBill} text={'Expense'} number={'$1200'} />
-        </Cards>
-        {/* <div className={styles.cards}>
+      <Cards>
+        <Card icon={faUserPlus} text={'New Leads'} number={205} />
+        <Card icon={faSackDollar} text={'Sales'} number={'$4021'} />
+        <Card icon={faBasketShopping} text={'Orders'} number={80} />
+        <Card icon={faMoneyBill} text={'Expense'} number={'$1200'} />
+      </Cards>
+      {/* <div className={styles.cards}>
         </div> */}
-        <Cards>
-          <div className={styles.year_sales}>
-            <div className={styles.sales_title}>This Year Sales</div>
-            <Bar data={data} />
-          </div>
-          <div className={styles.countries_sales}>
-            <div className={styles.sales_title}>Sales by Countries</div>
-            <Pie data={data2} />
-          </div>
-        </Cards>
-        <Cards>
-          <div className={styles.new_users}>
-            <Items type="user" items={users} count={usersCount} pagesCount={u_pagesCount} />
-          </div>
-          <div className={styles.users_activity}>
-            <h3>User activity</h3>
-          </div>
-        </Cards>
-        <div className={styles.stats}>{/* <Line data={data4} options={options4} /> */}</div>
-      </div>
+      <Cards>
+        <div className={styles.year_sales}>
+          <div className={styles.sales_title}>This Year Sales</div>
+          <Bar data={data} />
+        </div>
+        <div className={styles.countries_sales}>
+          <div className={styles.sales_title}>Sales by Countries</div>
+          <Pie data={data2} />
+        </div>
+      </Cards>
+      <Cards>
+        <div className={styles.new_users}>
+          <Items type="user" items={users} count={usersCount} pagesCount={u_pagesCount} />
+        </div>
+        <div className={styles.users_activity}>
+          <h3>User activity</h3>
+        </div>
+      </Cards>
+      <div className={styles.stats}>{/* <Line data={data4} options={options4} /> */}</div>
     </div>
   )
 }
@@ -137,18 +129,18 @@ export default function Admin(props) {
 export const getServerSideProps = async ctx => {
   const session = await getSession(ctx)
   if (!session) return { notFound: true }
-  const token = await getToken(ctx)
+  // const token = await getToken(ctx)
 
   // if (token.isAdmin) {
   try {
-    const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1')
+    // const productsRes = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products?page=1')
     const usersRes = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/users?page=1')
     return {
       props: {
         user: session.user,
-        products: productsRes.data.products,
-        p_pagesCount: productsRes.data.pagesCount,
-        productsCount: productsRes.data.productsCount,
+        // products: productsRes.data.products,
+        // p_pagesCount: productsRes.data.pagesCount,
+        // productsCount: productsRes.data.productsCount,
         users: usersRes.data.users,
         u_pagesCount: usersRes.data.pagesCount,
         usersCount: usersRes.data.usersCount,

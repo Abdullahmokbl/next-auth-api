@@ -1,0 +1,20 @@
+.main {
+  width: 100%;
+  padding: 4em;
+  transition: all 0.5s ease-in-out;
+}
+.main:dir(ltr) {
+  float: right;
+}
+.main:dir(rtl) {
+  float: left;
+}
+.main.open {
+  width: calc(100% - 200px);
+}
+
+@media only screen and (max-width: 600px) {
+  .main.open {
+    width: 100%;
+  }
+}

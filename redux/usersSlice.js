@@ -11,15 +11,6 @@ const axiosConfig = {
   },
 }
 
-// export const login = createAsyncThunk('user/login', async (user, { rejectWithValue }) => {
-//   // try {
-//   //   const res = await axios.post(url + 'login', user, axiosConfig)
-//   //   return res.data
-//   // } catch (e) {
-//   //   return rejectWithValue(e.response.data)
-//   // }
-// })
-
 export const signup = createAsyncThunk('user/add', async (user, { rejectWithValue }) => {
   try {
     const res = await axios.post(url + 'signup', user, axiosConfig)
@@ -32,26 +23,10 @@ export const getUsers = createAsyncThunk('users/get', async () => {
   const res = await axios.get(url + 'users', axiosConfig)
   return res.data
 })
-export const getSomeUsers = createAsyncThunk('users/getsome', async ({ page, limit }) => {
+export const getSomeItems = createAsyncThunk('users/getsome', async ({ page, limit }) => {
   const res = await axios.get(url + 'users?page=' + page + '&limit=' + limit, axiosConfig)
   return res.data
 })
-// export const addToCart = createAsyncThunk('cart/add', async (cart, { rejectWithValue }) => {
-//   try {
-//     const res = await axios.post(url + 'cart', cart, axiosConfig)
-//     return res.data
-//   } catch (e) {
-//     return rejectWithValue(e.response.data)
-//   }
-// })
-// export const delFromCart = createAsyncThunk('cart/del', async (cart, { rejectWithValue }) => {
-//   try {
-//     const res = await axios.delete(url + 'cart', { data: cart, headers: axiosConfig.headers })
-//     return res.data
-//   } catch (e) {
-//     return rejectWithValue(e.response.data)
-//   }
-// })
 export const updateUser = createAsyncThunk('user/update', async (user, { rejectWithValue }) => {
   try {
     const res = await axios.put(url + 'users', { data: user, headers: axiosConfig.headers })
@@ -110,19 +85,12 @@ export const sendMail = createAsyncThunk('mail/send', async (email, { rejectWith
   }
 })
 
-// const getFromLocalStorage = key => {
-//   if (!key || typeof window === 'undefined') {
-//     return ''
-//   }
-//   return localStorage.getItem(key)
-// }
-
 const initialState = {
   users: [],
-  someUsers: null,
-  pageUsers: null,
+  someItems: null,
+  page: 1,
+  pageItems: null,
   user: null,
-  // cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
   token: null,
   isAuthenticated: false,
   isLoading: null,
@@ -136,65 +104,31 @@ export const usersSlice = createSlice({
     setUsers: (state, action) => {
       state.users = [...action.payload]
     },
-    getPageUsers: (state, action) => {
+    getPageItems: (state, action) => {
       const { page, limit } = action.payload
-      state.pageUsers = state.users.slice((page - 1) * limit, limit * page)
+      state.page = page
+      state.pageItems = state.users.slice((page - 1) * limit, limit * page)
     },
-    // addCart: (state, action) => {
-    //   const items = JSON.parse(localStorage.getItem('cart')) || []
-    //   // console.log(items)
-    //   const item = state.cart.find(product => product._id === action.payload._id)
-    //   if (item) {
-    //     items.forEach(i => i._id === item._id && i.qty++)
-    //     localStorage.setItem('cart', JSON.stringify(items))
-    //     item.qty++
-    //     // state.cart = [...state.cart, {...action.payload, qty: item.qty +1}];
-    //   } else {
-    //     items.push({ ...action.payload, qty: 1 })
-    //     localStorage.setItem('cart', JSON.stringify(items))
-    //     state.cart.push({ ...action.payload, qty: 1 })
-    //     // state.cart = [...state.cart, {...action.payload, qty:1}];
-    //   }
-    //   // state.cart = [...state.cart, action.payload];
-    // },
-    // decCart: (state, action) => {
-    //   const items = JSON.parse(localStorage.getItem('cart'))
-    //   items.forEach(i => i._id === action.payload._id && i.qty--)
-    //   localStorage.setItem('cart', JSON.stringify(items))
-    //   state.cart.map(i => i._id === action.payload._id && i.qty--)
-    // },
-    // delCart: (state, action) => {
-    //   const items = JSON.parse(localStorage.getItem('cart'))
-    //   const newItems = items.filter(product => product._id !== action.payload)
-    //   localStorage.setItem('cart', JSON.stringify(newItems))
-    //   state.cart = [...state.cart].filter(product => product._id !== action.payload)
-    // },
   },
   extraReducers: {
-    [getSomeUsers.fulfilled]: (state, action) => {
-      state.someUsers = action.payload.users
+    [getSomeItems.fulfilled]: (state, action) => {
+      state.someItems = action.payload.users
     },
     [delUser.fulfilled]: (state, action) => {
       return {
         ...state,
-        someUsers: [...state.someUsers].filter(p => p._id !== action.payload.id),
+        someItems: [...state.someItems].filter(p => p._id !== action.payload.id),
       }
     },
     [delAllUsers.fulfilled]: state => {
-      state.someUsers = []
+      state.someItems = []
     },
-    // [addToCart.fulfilled]: (state, action) => {
-    //   state.cart = [...state.cart, action.payload]
-    // },
-    // [delFromCart.fulfilled]: (state, action) => {
-    //   state.cart = [...state.cart].filter(product => product._id !== action.payload)
-    // },
     // [SearchByEmail.fulfilled]: (state, action) => {
     //     state.email = action.payload.email
     // }
   },
 })
 
-export const { setUsers, getPageUsers } = usersSlice.actions
+export const { setUsers, getPageItems } = usersSlice.actions
 
 export default usersSlice.reducer
