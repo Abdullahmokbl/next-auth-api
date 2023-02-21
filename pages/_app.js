@@ -39,7 +39,7 @@ function MyApp({ Component, ...rest }) {
   const { locale, pathname } = useRouter()
 
   useEffect(() => {
-    console.log(store)
+    // console.log(props.pageProps.session)
     if (!localStorage.getItem('userId')) {
       // const userId = uuid()
       localStorage.setItem('userId', uuid())
