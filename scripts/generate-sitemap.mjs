@@ -4,11 +4,11 @@ import { globby } from 'globby'
 // const globby = require('globby')
 
 function addPage(page) {
-  const path = page.replace('pages', '').replace('.jsx', '').replace('.mdx', '')
-  const route = path === '/index' ? '' : path
+  const path = page.replace('pages', '').replace('/index', '').replace('.jsx', '').replace('.mdx', '')
+  // const route = path === '/index' ? '' : path
 
   return `  <url>
-    <loc>${`${process.env.NEXT_PUBLIC_HOST}${route}`}</loc>
+    <loc>${`${process.env.NEXT_PUBLIC_HOST}${path}`}</loc>
     <changefreq>hourly</changefreq>
   </url>`
 }

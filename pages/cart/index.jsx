@@ -11,7 +11,8 @@ import Checkout from '../../components/Checkout'
 import axios from 'axios'
 
 export default function Cart({ cart, userId }) {
-  // const { data: session } = useSession()
+  // const { data: session, status } = useSession()
+  // console.log(session, status)
   // const user = session?.user
   // console.log(user)
 

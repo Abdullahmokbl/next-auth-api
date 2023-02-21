@@ -1,9 +1,12 @@
+import { unstable_getServerSession } from 'next-auth/next'
+import { authOptions } from '../../pages/api/auth/[...nextauth]'
 import { getSession } from 'next-auth/react'
 import connectDB from './database/mongodb'
 import User from './models/user'
 
 const handler = async (req, res) => {
-  // const session = await getSession({ req });
+  // const session = await getSession({ req })
+  const session = await unstable_getServerSession(req, res, authOptions)
   // if (!session) return res.status(401).json({ msg: "Unauthorized" });
   if (req.method === 'GET' && req.query.userId) {
     const { userId } = req.query

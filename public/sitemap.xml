@@ -4,31 +4,31 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/cart/index</loc>
+    <loc>http://localhost:3000/cart</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/checkout/index</loc>
+    <loc>http://localhost:3000/checkout</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/checkout_success/index</loc>
+    <loc>http://localhost:3000/checkout_success</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/code/index</loc>
+    <loc>http://localhost:3000/code</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/contact/index</loc>
+    <loc>http://localhost:3000/contact</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/identify/index</loc>
+    <loc>http://localhost:3000/identify</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/login/index</loc>
+    <loc>http://localhost:3000/login</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
@@ -36,23 +36,23 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/profile/index</loc>
+    <loc>http://localhost:3000/profile</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/recover-password/index</loc>
+    <loc>http://localhost:3000/recover-password</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/search/index</loc>
+    <loc>http://localhost:3000/search</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/signup/index</loc>
+    <loc>http://localhost:3000/signup</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/type-password/index</loc>
+    <loc>http://localhost:3000/type-password</loc>
     <changefreq>hourly</changefreq>
   </url>
 </urlset>

@@ -37,11 +37,10 @@ const theme = 'dark'
 function MyApp({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest)
   const { locale, pathname } = useRouter()
+  // console.log(rest)
 
   useEffect(() => {
-    // console.log(props.pageProps.session)
     if (!localStorage.getItem('userId')) {
-      // const userId = uuid()
       localStorage.setItem('userId', uuid())
     }
   })
@@ -56,7 +55,7 @@ function MyApp({ Component, ...rest }) {
   // const Layout = dynamic(() => import("../components/Layout"), {ssr:false})
   return (
     <Provider store={store}>
-      <SessionProvider session={props.pageProps.session}>
+      <SessionProvider>
         <ThemeProvider>
           {/* <PayPalScriptProvider options={initialOptions}> */}
           <Meta title={Component.name} />

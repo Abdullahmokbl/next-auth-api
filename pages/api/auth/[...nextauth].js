@@ -1,10 +1,10 @@
-import NextAuth from "next-auth/next";
-import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
-import LinkedinProvider from "next-auth/providers/linkedin";
-import Credentials from "next-auth/providers/credentials";
-import axios from "axios";
+import NextAuth from 'next-auth/next'
+import GoogleProvider from 'next-auth/providers/google'
+import GithubProvider from 'next-auth/providers/github'
+import FacebookProvider from 'next-auth/providers/facebook'
+import LinkedinProvider from 'next-auth/providers/linkedin'
+import Credentials from 'next-auth/providers/credentials'
+import axios from 'axios'
 
 // const GOOGLE_AUTHORIZATION_URL =
 //   "https://accounts.google.com/o/oauth2/v2/auth?" +
@@ -31,22 +31,22 @@ import axios from "axios";
 //   }
 // }
 
-export default NextAuth({
+export const authOptions = {
   providers: [
     Credentials({
-      id: "Credentials",
+      id: 'Credentials',
       async authorize(credentials, req) {
-        const { email, password, remember } = credentials;
-        const res = await axios.post(process.env.NEXT_PUBLIC_API + "/login", {
+        const { email, password, remember } = credentials
+        const res = await axios.post(process.env.NEXT_PUBLIC_API + '/login', {
           email,
           password,
           remember,
-        });
-        const user = await res.data;
+        })
+        const user = await res.data
         if (res.status && user) {
-          return user;
+          return user
         }
-        return null;
+        return null
       },
     }),
     GoogleProvider({
@@ -105,13 +105,13 @@ export default NextAuth({
 
         //   token.accessToken = account.access_token
         //   token.id = user.id
-        token.user = user;
-        token.isAdmin = user.isAdmin;
+        token.user = user
+        token.isAdmin = user.isAdmin
       }
       //   if (Date.now() > token.accessTokenExpires) {
       //     return await refreshAccessToken(token);
       //   }
-      return token;
+      return token
     },
 
     async session({ session, token }) {
@@ -119,15 +119,17 @@ export default NextAuth({
       // session.accessToken = token.accessToken
       // session.user.id = token.id;
       // session.user = token.user;
-      session.user.id = token.user.id;
-      session.user.email = token.user.email;
-      session.user.name = token.user.name;
-      session.user.cart = token.user.cart;
-      return session;
+      session.user.id = token.user.id
+      session.user.email = token.user.email
+      session.user.name = token.user.name
+      session.user.cart = token.user.cart
+      return session
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: '/login',
     // error: '/auth/error'
   },
-});
+}
+
+export default NextAuth(authOptions)
