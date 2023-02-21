@@ -6,6 +6,11 @@ import Meta from '../components/Meta'
 import { Provider } from 'react-redux'
 // import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { ThemeProvider } from 'next-themes'
+import AdminLayout from './admin/components/AdminLayout'
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { v4 as uuid } from 'uuid'
 
 // next font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core'
@@ -14,10 +19,6 @@ config.autoAddCss = false
 
 // next/font
 import { Nunito, Noto_Naskh_Arabic } from '@next/font/google'
-// import { useEffect } from 'react'
-import { ThemeProvider } from 'next-themes'
-import AdminLayout from './admin/components/AdminLayout'
-// import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -34,8 +35,16 @@ const theme = 'dark'
 //   // 'data-client-token': process.env.PAYPAL_CLIENT_SECRET,
 // }
 function MyApp({ Component, ...rest }) {
+  const { store, props } = wrapper.useWrappedStore(rest)
   const { locale, pathname } = useRouter()
 
+  useEffect(() => {
+    console.log(store)
+    if (!localStorage.getItem('userId')) {
+      // const userId = uuid()
+      localStorage.setItem('userId', uuid())
+    }
+  })
   // useEffect(() => {
   //   if (locale === "ar") {
   //     document.documentElement.style.setProperty("--direction", "rtl");
@@ -43,7 +52,6 @@ function MyApp({ Component, ...rest }) {
   //     document.documentElement.style.setProperty("--direction", "ltr");
   //   }
   // });
-  const { store, props } = wrapper.useWrappedStore(rest)
   // match client with server
   // const Layout = dynamic(() => import("../components/Layout"), {ssr:false})
   return (
