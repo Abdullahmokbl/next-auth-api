@@ -4,13 +4,13 @@ import { SessionProvider } from 'next-auth/react'
 import Layout from '../components/Layout'
 import Meta from '../components/Meta'
 import { Provider } from 'react-redux'
-// import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
 import AdminLayout from './admin/components/AdminLayout'
 // import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { v4 as uuid } from 'uuid'
+import { addGuest } from '../redux/usersSlice'
 
 // next font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core'
@@ -39,20 +39,20 @@ function MyApp({ Component, ...rest }) {
   const { locale, pathname } = useRouter()
   // console.log(rest)
 
+  // add Guest to database
   useEffect(() => {
-    if (!localStorage.getItem('userId')) {
-      localStorage.setItem('userId', uuid())
+    const add_guest = async guestId => {
+      await store
+        .dispatch(addGuest(guestId))
+        .then(() => localStorage.setItem('guestId', guestId))
+        .catch(e => console.log(e))
     }
-  })
-  // useEffect(() => {
-  //   if (locale === "ar") {
-  //     document.documentElement.style.setProperty("--direction", "rtl");
-  //   } else {
-  //     document.documentElement.style.setProperty("--direction", "ltr");
-  //   }
-  // });
-  // match client with server
-  // const Layout = dynamic(() => import("../components/Layout"), {ssr:false})
+    if (!localStorage.getItem('guestId')) {
+      const guestId = uuid()
+      add_guest(guestId)
+    }
+  }, [])
+
   return (
     <Provider store={store}>
       <SessionProvider>

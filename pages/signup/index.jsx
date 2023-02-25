@@ -62,7 +62,7 @@ export default function Signup() {
             <input type="radio" name="gender" value="female" />
             Female
           </label>
-          <AsyncButton title="Sign Up" disabled={disabled} />
+          <AsyncButton title="Sign Up" disabled={disabled} color="#ee5684" />
         </form>
         <div className={styles.or}>
           <span>OR</span>

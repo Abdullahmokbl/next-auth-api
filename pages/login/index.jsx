@@ -80,7 +80,7 @@ export default function Login({ csrfToken }) {
             <input type="checkbox" name="remember" onChange={handleChange} />
             Remember me?
           </label>
-          <AsyncButton title="login" disabled={disabled} />
+          <AsyncButton title="login" disabled={disabled} color="#ee5684" />
           {/* <button
             type="submit"
             disabled={disabled}

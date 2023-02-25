@@ -3,35 +3,46 @@ import styles from './index.module.css'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner, faStar } from '@fortawesome/free-solid-svg-icons'
-import { addCart, addToCart, decCart, delFromCart } from '../../redux/cartSlice'
+import { addCart, addItemToCart, decCart, delFromCart } from '../../redux/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { getSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import AsyncButton from '../../components/AsyncButton'
 
 export default function Product({ product, id }) {
   const dispatch = useDispatch()
+  const { data: session } = useSession()
   // console.log(user)
-  const { cart } = useSelector(state => state.cart)
+  // const { cart } = useSelector(state => state.cart)
   // console.log(cart)
   // const exist = user?.cart.find(product => product._id === id);
-  const item = cart.find(product => product._id === id)
+  // const item = cart.find(product => product._id === id)
   // console.log(item)
-  const [exist, setExist] = useState(null)
+  // const [exist, setExist] = useState(null)
   // const [qty, setQty] = useState(null)
   const [disabled, setDisabled] = useState(false)
-  useEffect(() => {
-    setExist(cart.find(product => product._id === id))
-    // console.log(exist)
-  }, [exist])
+  // useEffect(() => {
+  //   setExist(cart.find(product => product._id === id))
+  //   // console.log(exist)
+  // }, [exist])
   // console.log(exist.length)
   // console.log(exist)
   // console.log(item)
   // if(!exist && !item) return <></>
   // console.log('fdf')
 
-  const handleAddCart = () => {
-    // setDisabled(true)
-    dispatch(addCart(product))
+  const handleAddCart = async () => {
+    setDisabled(true)
+    // dispatch(addCart(product))
+    if (session) {
+      await dispatch(addItemToCart({ userId: session.user.id, product }))
+      // alert()
+      setDisabled(false)
+    } else {
+      const guestId = localStorage.getItem('guestId')
+      await dispatch(addItemToCart({ guestId, product }))
+      setDisabled(false)
+    }
   }
   const AddButton = () => {
     return (
@@ -40,20 +51,20 @@ export default function Product({ product, id }) {
       </div>
     )
   }
-  const Quantity = () => {
-    return (
-      <div className={styles.qty}>
-        <div
-          className={exist?.qty <= 1 || exist?.qty === undefined ? 'disable' : undefined}
-          onClick={() => dispatch(decCart(product))}
-        >
-          -
-        </div>
-        <span>{disabled ? <FontAwesomeIcon icon={faSpinner} spin /> : exist.qty}</span>
-        <div onClick={() => handleAddCart()}>+</div>
-      </div>
-    )
-  }
+  // const Quantity = () => {
+  //   return (
+  //     <div className={styles.qty}>
+  //       <div
+  //         className={exist?.qty <= 1 || exist?.qty === undefined ? 'disable' : undefined}
+  //         onClick={() => dispatch(decCart(product))}
+  //       >
+  //         -
+  //       </div>
+  //       <span>{disabled ? <FontAwesomeIcon icon={faSpinner} spin /> : exist.qty}</span>
+  //       <div onClick={() => handleAddCart()}>+</div>
+  //     </div>
+  //   )
+  // }
   // const AddedButton = () => {
   //   return(
   //     <div className='button active' onClick={() => dispatch(delFromCart({user_id:user.id, product_id:id}))}>Added to cart</div>
@@ -79,7 +90,9 @@ export default function Product({ product, id }) {
           </div>
           <h2>{product.price}$</h2>
           <div>free shipping</div>
-          {!exist ? <AddButton /> : <Quantity />}
+          <AddButton />
+          {/* <AsyncButton title="Add to cart" disabled={disabled} /> */}
+          {/* {!exist ? <AddButton /> : <Quantity />} */}
           {/* {user? carts.length <= 0 ? <AddButton /> : <AddedButton /> : ''} */}
           <div>
             <h3>About</h3>

@@ -52,9 +52,9 @@ export default function Navbar() {
           <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
         </div>
         <div className={`${styles.right} ${status === 'loading' ? styles.loading : styles.loaded}`}>
-          <Link href="/cart">
+          <a href="/cart">
             <Icon icon={faCartShopping} counter={count} />
-          </Link>
+          </a>
           {user ? <Welcome /> : <Auth />}
         </div>
         <div className={styles.d_title}>
@@ -65,9 +65,9 @@ export default function Navbar() {
         </div>
         <div className={`${styles.dropdown_menu} ${dropdownMenu ? styles.open : undefined}`}>
           <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
-          <Link href="/cart">
+          <a href="/cart">
             <Icon icon={faCartShopping} counter={count} />
-          </Link>
+          </a>
           {user ? <Welcome /> : <Auth />}
         </div>
       </nav>

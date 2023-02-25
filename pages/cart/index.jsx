@@ -4,54 +4,56 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.css'
-import { addToCart, decItemInCart, delFromCart } from '../../redux/cartSlice'
+import { addItemToCart, clearAllCart, delItemFromCart } from '../../redux/cartSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import Checkout from '../../components/Checkout'
 import axios from 'axios'
+import AsyncButton from '../../components/AsyncButton'
+import CartItem from '../../components/CartItem'
 
-export default function Cart({ cart, userId }) {
-  // const { data: session, status } = useSession()
-  // console.log(session, status)
-  // const user = session?.user
-  // console.log(user)
-
+export default function Cart() {
   const dispatch = useDispatch()
-  // const [carts, setCarts] = useState(null)
-  // const { cart } = useSelector(state => state.cart)
-  // if(cart.length !== 0) return <div>Loading</div>
-  // useEffect(() => {
-  //   setCarts(cart)
-  // }, [cart])
-  // if (!carts) return <></>
+  const [disabled, setDisabled] = useState(false)
+  const [carts, setCarts] = useState(null)
+  const { cart } = useSelector(state => state.cart)
+  console.log(cart)
+  let userId, guestId, id
+  const { data: session, status } = useSession()
+  userId = session?.user?.id
+
+  useEffect(() => {
+    if (!session) guestId = localStorage.getItem('guestId')
+    if (status !== 'loading') {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API}/cart?userId=${userId ? userId : guestId}`)
+        .then(res => setCarts(res.data))
+        .catch(() => setCarts([]))
+    }
+  }, [status])
+
+  if (carts === null) return <div>Loading</div>
   let totalPrice = 0
-  cart?.map(p => (totalPrice += p.price * p.qty))
+  carts?.map(p => (totalPrice += p.price * p.qty))
+
+  const handleCart = async (type, product) => {
+    setDisabled(true)
+    if (userId) {
+      if (type === 'inc' || type === 'dec') await dispatch(addItemToCart({ type, userId, product }))
+      if (type === 'del') await dispatch(delItemFromCart({ userId, productId: product }))
+      if (type === 'clear') await dispatch(clearAllCart({ userId }))
+    } else {
+      if (type === 'inc' || type === 'dec') await dispatch(addItemToCart({ type, userId, product }))
+      if (type === 'del') await dispatch(delItemFromCart({ userId, productId: product }))
+      if (type === 'clear') await dispatch(clearAllCart({ userId }))
+    }
+    setDisabled(false)
+  }
 
   const Items =
-    cart?.length > 0 &&
-    cart?.map(item => {
-      return (
-        <div className={styles.product} key={item._id}>
-          <Link href={'/product/' + item._id}>
-            <Image src={item.img.url} width={50} height={50} alt="" />
-            <h3>{item.name}</h3>
-            <div className={styles.price}>${item.price}</div>
-          </Link>
-          <div>
-            <div className={styles.remove} onClick={() => dispatch(delFromCart(item._id))}>
-              <FontAwesomeIcon icon={faTrash} />
-              Remove
-            </div>
-            <div className={styles.qty}>
-              <div className={item.qty <= 1 ? 'disable' : undefined} onClick={() => dispatch(decItemInCart(item))}>
-                -
-              </div>
-              <span>{item.qty}</span>
-              <div onClick={() => dispatch(addToCart(item))}>+</div>
-            </div>
-          </div>
-        </div>
-      )
+    carts?.length > 0 &&
+    carts?.map(product => {
+      return <CartItem key={product._id} product={product} disabled={disabled} handleCart={handleCart} />
     })
 
   const Summary = () => {
@@ -62,10 +64,7 @@ export default function Cart({ cart, userId }) {
           <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
-        <Checkout cart={cart} userId={userId} />
-        {/* <div>
-          <a href="/checkout">CHECKOUT(${totalPrice})</a>
-        </div> */}
+        <Checkout cart={carts} userId={session ? userId : guestId} />
       </div>
     )
   }
@@ -85,7 +84,12 @@ export default function Cart({ cart, userId }) {
       {/* <h2>Your Cart</h2> */}
       {Items ? (
         <div className={styles.items}>
-          <div className={styles.products}>{Items}</div>
+          <div className={styles.products}>
+            {Items}
+            <div className={styles.clear} onClick={() => handleCart('clear')}>
+              <AsyncButton title="Clear Cart" disabled={disabled} color="orange" />
+            </div>
+          </div>
           <Summary />
         </div>
       ) : (
@@ -95,20 +99,21 @@ export default function Cart({ cart, userId }) {
   )
 }
 
-export const getServerSideProps = async ctx => {
-  const session = await getSession(ctx)
-  let user = null
-  if (session) user = session.user
+// export const getServerSideProps = async ctx => {
+//   const session = await getSession(ctx)
+//   let user = null
+//   if (!session) return { props: { user, cart: null } }
+//   if (session) user = session.user
 
-  try {
-    const res = await axios.get(process.env.NEXT_PUBLIC_API + '/cart?userId=' + user.id)
-
-    return {
-      props: { cart: res.data, userId: user.id },
-    }
-  } catch (e) {
-    return {
-      props: { cart: null },
-    }
-  }
-}
+//   try {
+//     const res = await axios.get(process.env.NEXT_PUBLIC_API + '/cart?userId=' + user.id)
+//     return {
+//       props: { cart: res.data, userId: user.id },
+//     }
+//   } catch (e) {
+//     console.log(e)
+//     return {
+//       props: { cart: null },
+//     }
+//   }
+// }

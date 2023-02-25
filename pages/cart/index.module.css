@@ -24,53 +24,11 @@
 .products {
   width: 65%;
 }
-.product {
-  background-color: var(--background-secondary);
-  border-radius: 8px;
-  padding: 1em;
-}
-.product:not(:last-child) {
-  margin-bottom: 2em;
-  /* border-bottom: 1px solid black; */
-}
-.product > div:first-child {
-  cursor: pointer;
-}
-.product > div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 2em 0;
-}
-.product h3 {
-  width: 70%;
-  text-align: start;
-}
-.product .remove {
-  color: #f68b1e;
-  padding: 1em;
-  cursor: pointer;
-}
-.product svg {
-  margin-right: 1em;
-}
-.product .remove:hover {
-  background-color: #fcdbb9;
-}
-.product .qty {
-  display: flex;
-}
-.product .qty div {
-  background-color: orange;
-  width: 2em;
-  height: 2em;
-  border-radius: 4px;
-  line-height: 2;
-  cursor: pointer;
-}
-.product .qty span {
-  margin: 0 1em;
-  line-height: 2;
+.clear button {
+  padding: 10px;
+  width: 10em;
+  margin: 1px auto;
+  border-radius: 6px;
 }
 .summary {
   width: 25%;

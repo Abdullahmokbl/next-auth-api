@@ -19,6 +19,14 @@ export const signup = createAsyncThunk('user/add', async (user, { rejectWithValu
     return rejectWithValue(e.response.data)
   }
 })
+export const addGuest = createAsyncThunk('guest/add', async (guestId, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(url + 'guests', { guestId }, axiosConfig)
+    return res.data
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
 export const getUsers = createAsyncThunk('users/get', async () => {
   const res = await axios.get(url + 'users', axiosConfig)
   return res.data
