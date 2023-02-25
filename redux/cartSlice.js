@@ -52,48 +52,52 @@ export const clearAllCart = createAsyncThunk('cart/clear', async (cart, { reject
 // }
 
 const initialState = {
-  cart: [],
+  cart: null,
   // cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
 }
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
-  // reducers: {
-  //   addCart: (state, action) => {
-  //     const items = JSON.parse(localStorage.getItem('cart')) || []
-  //     // console.log(items)
-  //     const item = state.cart.find(product => product._id === action.payload._id)
-  //     if (item) {
-  //       items.forEach(i => i._id === item._id && i.qty++)
-  //       localStorage.setItem('cart', JSON.stringify(items))
-  //       item.qty++
-  //       // state.cart = [...state.cart, {...action.payload, qty: item.qty +1}];
-  //     } else {
-  //       items.push({ ...action.payload, qty: 1 })
-  //       localStorage.setItem('cart', JSON.stringify(items))
-  //       state.cart.push({ ...action.payload, qty: 1 })
-  //       // state.cart = [...state.cart, {...action.payload, qty:1}];
-  //     }
-  //     // state.cart = [...state.cart, action.payload];
-  //   },
-  //   decCart: (state, action) => {
-  //     const items = JSON.parse(localStorage.getItem('cart'))
-  //     items.forEach(i => i._id === action.payload._id && i.qty--)
-  //     localStorage.setItem('cart', JSON.stringify(items))
-  //     state.cart.map(i => i._id === action.payload._id && i.qty--)
-  //   },
-  //   delCart: (state, action) => {
-  //     const items = JSON.parse(localStorage.getItem('cart'))
-  //     const newItems = items.filter(product => product._id !== action.payload)
-  //     localStorage.setItem('cart', JSON.stringify(newItems))
-  //     state.cart = [...state.cart].filter(product => product._id !== action.payload)
-  //   },
-  //   clearCart: state => {
-  //     localStorage.removeItem('cart')
-  //     state.cart = []
-  //   },
-  // },
+  reducers: {
+    makeCart: (state, action) => {
+      console.log(action.payload)
+      state.cart = [...action.payload]
+    },
+    //   addCart: (state, action) => {
+    //     const items = JSON.parse(localStorage.getItem('cart')) || []
+    //     // console.log(items)
+    //     const item = state.cart.find(product => product._id === action.payload._id)
+    //     if (item) {
+    //       items.forEach(i => i._id === item._id && i.qty++)
+    //       localStorage.setItem('cart', JSON.stringify(items))
+    //       item.qty++
+    //       // state.cart = [...state.cart, {...action.payload, qty: item.qty +1}];
+    //     } else {
+    //       items.push({ ...action.payload, qty: 1 })
+    //       localStorage.setItem('cart', JSON.stringify(items))
+    //       state.cart.push({ ...action.payload, qty: 1 })
+    //       // state.cart = [...state.cart, {...action.payload, qty:1}];
+    //     }
+    //     // state.cart = [...state.cart, action.payload];
+    //   },
+    //   decCart: (state, action) => {
+    //     const items = JSON.parse(localStorage.getItem('cart'))
+    //     items.forEach(i => i._id === action.payload._id && i.qty--)
+    //     localStorage.setItem('cart', JSON.stringify(items))
+    //     state.cart.map(i => i._id === action.payload._id && i.qty--)
+    //   },
+    //   delCart: (state, action) => {
+    //     const items = JSON.parse(localStorage.getItem('cart'))
+    //     const newItems = items.filter(product => product._id !== action.payload)
+    //     localStorage.setItem('cart', JSON.stringify(newItems))
+    //     state.cart = [...state.cart].filter(product => product._id !== action.payload)
+    //   },
+    //   clearCart: state => {
+    //     localStorage.removeItem('cart')
+    //     state.cart = []
+    //   },
+  },
   extraReducers: {
     [addItemToCart.fulfilled]: (state, action) => {
       const { product, type } = action.payload
@@ -113,6 +117,6 @@ const cartSlice = createSlice({
   },
 })
 
-export const { addCart, decCart, delCart, clearCart } = cartSlice.actions
+export const { makeCart } = cartSlice.actions
 
 export default cartSlice.reducer

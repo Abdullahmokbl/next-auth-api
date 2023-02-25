@@ -17,7 +17,7 @@ export default function Navbar() {
   const { cart } = useSelector(state => state.cart)
   const [count, setCount] = useState(null)
   useEffect(() => {
-    setCount(cart.length)
+    setCount(cart?.length)
   }, [cart])
 
   const { locale } = useRouter()

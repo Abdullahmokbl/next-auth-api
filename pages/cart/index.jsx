@@ -1,12 +1,9 @@
 import { getSession, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.css'
-import { addItemToCart, clearAllCart, delItemFromCart } from '../../redux/cartSlice'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { addItemToCart, clearAllCart, delItemFromCart, makeCart } from '../../redux/cartSlice'
 import Checkout from '../../components/Checkout'
 import axios from 'axios'
 import AsyncButton from '../../components/AsyncButton'
@@ -15,10 +12,9 @@ import CartItem from '../../components/CartItem'
 export default function Cart() {
   const dispatch = useDispatch()
   const [disabled, setDisabled] = useState(false)
-  const [carts, setCarts] = useState(null)
   const { cart } = useSelector(state => state.cart)
   console.log(cart)
-  let userId, guestId, id
+  let userId, guestId
   const { data: session, status } = useSession()
   userId = session?.user?.id
 
@@ -27,14 +23,16 @@ export default function Cart() {
     if (status !== 'loading') {
       axios
         .get(`${process.env.NEXT_PUBLIC_API}/cart?userId=${userId ? userId : guestId}`)
-        .then(res => setCarts(res.data))
-        .catch(() => setCarts([]))
+        .then(res => {
+          dispatch(makeCart(res.data))
+        })
+        .catch(() => dispatch(makeCart([])))
     }
   }, [status])
 
-  if (carts === null) return <div>Loading</div>
+  if (cart === null) return <div>Loading</div>
   let totalPrice = 0
-  carts?.map(p => (totalPrice += p.price * p.qty))
+  cart?.map(p => (totalPrice += p.price * p.qty))
 
   const handleCart = async (type, product) => {
     setDisabled(true)
@@ -51,8 +49,8 @@ export default function Cart() {
   }
 
   const Items =
-    carts?.length > 0 &&
-    carts?.map(product => {
+    cart?.length > 0 &&
+    cart?.map(product => {
       return <CartItem key={product._id} product={product} disabled={disabled} handleCart={handleCart} />
     })
 
@@ -64,7 +62,7 @@ export default function Cart() {
           <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
-        <Checkout cart={carts} userId={session ? userId : guestId} />
+        <Checkout cart={cart} userId={session ? userId : guestId} />
       </div>
     )
   }
@@ -81,7 +79,6 @@ export default function Cart() {
   }
   return (
     <div className={`${styles.cart} container navpd`}>
-      {/* <h2>Your Cart</h2> */}
       {Items ? (
         <div className={styles.items}>
           <div className={styles.products}>
