@@ -1,51 +1,43 @@
 import styles from './index.module.css'
 import Products from '../components/Products'
 import axios from 'axios'
-import Alert from '../components/Alert'
-import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 Shopping.title = 'fff'
 export default function Shopping({ products }) {
-  const router = useRouter()
-  const { type, msg } = router.query
+  const { t } = useTranslation('common')
+
   return (
     <div className={styles.home}>
-      {/* {msg && <Alert msg={msg} type={type} />}
-      {msg && <Alert msg="ffffff" type={type} />} */}
-      <div>
-        <Alert type="error" msg="Error" />
-        <Alert type="success">
-          <p>Success message</p>
-        </Alert>
-        <Alert type="primary">
-          <h4>primary message</h4>
-        </Alert>
-        <Alert type="secondary">
-          <span>secondary message</span>
-        </Alert>
-      </div>
       <div className={styles.hero}></div>
-      <h2>Featured Products</h2>
+      <h2>{t('Featured Products')}</h2>
       <div className="container">
         <Products products={products} />
       </div>
       <div className={styles.shop}>
-        <div>Shop Here Whatever You Want</div>
+        <div>{t('Shop Here Whatever You Want')}</div>
       </div>
     </div>
   )
 }
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ locale }) => {
   try {
     const res = await axios.get(process.env.NEXT_PUBLIC_HOST + '/api/products')
     return {
-      props: { products: res.data },
+      props: {
+        ...(await serverSideTranslations(locale, ['common', 'footer'])),
+        products: res.data,
+      },
       revalidate: 60,
     }
   } catch (e) {
     return {
-      props: { products: null },
+      props: {
+        ...(await serverSideTranslations(locale, ['common', 'footer'])),
+        products: null,
+      },
     }
   }
 }

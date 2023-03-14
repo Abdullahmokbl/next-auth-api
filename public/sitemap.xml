@@ -16,15 +16,7 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/code</loc>
-    <changefreq>hourly</changefreq>
-  </url>
-  <url>
     <loc>http://localhost:3000/contact</loc>
-    <changefreq>hourly</changefreq>
-  </url>
-  <url>
-    <loc>http://localhost:3000/identify</loc>
     <changefreq>hourly</changefreq>
   </url>
   <url>
@@ -40,10 +32,6 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/recover-password</loc>
-    <changefreq>hourly</changefreq>
-  </url>
-  <url>
     <loc>http://localhost:3000/search</loc>
     <changefreq>hourly</changefreq>
   </url>
@@ -52,7 +40,19 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>http://localhost:3000/type-password</loc>
+    <loc>http://localhost:3000/login/code</loc>
+    <changefreq>hourly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:3000/login/identify</loc>
+    <changefreq>hourly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:3000/login/type-password</loc>
+    <changefreq>hourly</changefreq>
+  </url>
+  <url>
+    <loc>http://localhost:3000/login/identify/recover-password</loc>
     <changefreq>hourly</changefreq>
   </url>
 </urlset>

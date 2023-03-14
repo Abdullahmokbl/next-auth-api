@@ -8,8 +8,10 @@ import { useSelector } from 'react-redux'
 import styles from '../styles/Navbar.module.css'
 import Icon from './Icon'
 import Search from './Search'
+import { useTranslation } from 'next-i18next'
 
 export default function Navbar() {
+  const { t } = useTranslation('common')
   const { data: session, status } = useSession()
   let user = null
   if (session) user = session.user
@@ -21,13 +23,13 @@ export default function Navbar() {
   }, [cart])
 
   const { locale } = useRouter()
-  const lang = locale === 'ar' ? '🇪🇬 Arabic' : '🇺🇸 English'
+  const lang = locale === 'ar' ? t('🇪🇬 Arabic') : t('🇺🇸 English')
   const { name, email, image } = user || {}
   const [dropdownMenu, setDropdownMenu] = useState(false)
 
   const Auth = () => (
     <div className={styles.login}>
-      <Link href="/login">Login</Link>
+      <Link href="/login">{t('Login')}</Link>
     </div>
   )
   const Welcome = () => (
@@ -46,28 +48,28 @@ export default function Navbar() {
       <nav className={styles.nav}>
         <div className={styles.left}>
           <div className={styles.title}>
-            <Link href="/">Shopping</Link>
+            <Link href="/">{t('shopping')}</Link>
           </div>
           <Search />
-          <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
+          <Icon title={lang} items={{ en: t('🇺🇸 English'), ar: t('🇪🇬 Arabic') }} />
         </div>
         <div className={`${styles.right} ${status === 'loading' ? styles.loading : styles.loaded}`}>
-          <a href="/cart">
+          <Link href="/cart">
             <Icon icon={faCartShopping} counter={count} />
-          </a>
+          </Link>
           {user ? <Welcome /> : <Auth />}
         </div>
         <div className={styles.d_title}>
-          <Link href="/">Shopping</Link>
+          <Link href="/">{t('shopping')}</Link>
         </div>
         <div className={styles.dropdown_toggle} onClick={() => setDropdownMenu(!dropdownMenu)}>
           <FontAwesomeIcon icon={faEllipsisVertical} />
         </div>
         <div className={`${styles.dropdown_menu} ${dropdownMenu ? styles.open : undefined}`}>
-          <Icon title={lang} items={{ en: '🇺🇸 English', ar: '🇪🇬 Arabic' }} />
-          <a href="/cart">
+          <Icon title={lang} items={{ en: t('🇺🇸 English'), ar: t('🇪🇬 Arabic') }} />
+          <Link href="/cart">
             <Icon icon={faCartShopping} counter={count} />
-          </a>
+          </Link>
           {user ? <Welcome /> : <Auth />}
         </div>
       </nav>

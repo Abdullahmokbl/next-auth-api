@@ -8,43 +8,25 @@ import Checkout from '../../components/Checkout'
 import axios from 'axios'
 import AsyncButton from '../../components/AsyncButton'
 import CartItem from '../../components/CartItem'
+import { ToastContainer } from 'react-toastify'
+import { wrapper } from '../../redux/store'
 
-export default function Cart() {
+export default function Cart({ userId }) {
   const dispatch = useDispatch()
   const [disabled, setDisabled] = useState(false)
   const { cart } = useSelector(state => state.cart)
   console.log(cart)
-  let userId, guestId
-  const { data: session, status } = useSession()
-  userId = session?.user?.id
 
-  useEffect(() => {
-    if (!session) guestId = localStorage.getItem('guestId')
-    if (status !== 'loading') {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API}/cart?userId=${userId ? userId : guestId}`)
-        .then(res => {
-          dispatch(makeCart(res.data))
-        })
-        .catch(() => dispatch(makeCart([])))
-    }
-  }, [status])
-
-  if (cart === null) return <div>Loading</div>
+  // if (cart === null) return <Loading />
   let totalPrice = 0
   cart?.map(p => (totalPrice += p.price * p.qty))
 
   const handleCart = async (type, product) => {
+    if (disabled) return
     setDisabled(true)
-    if (userId) {
-      if (type === 'inc' || type === 'dec') await dispatch(addItemToCart({ type, userId, product }))
-      if (type === 'del') await dispatch(delItemFromCart({ userId, productId: product }))
-      if (type === 'clear') await dispatch(clearAllCart({ userId }))
-    } else {
-      if (type === 'inc' || type === 'dec') await dispatch(addItemToCart({ type, userId, product }))
-      if (type === 'del') await dispatch(delItemFromCart({ userId, productId: product }))
-      if (type === 'clear') await dispatch(clearAllCart({ userId }))
-    }
+    if (type === 'inc' || type === 'dec') await dispatch(addItemToCart({ type, userId, product }))
+    if (type === 'del') await dispatch(delItemFromCart({ userId, productId: product }))
+    if (type === 'clear') await dispatch(clearAllCart({ userId }))
     setDisabled(false)
   }
 
@@ -62,7 +44,7 @@ export default function Cart() {
           <div>Subtotal price :</div>
           <div>${totalPrice}</div>
         </div>
-        <Checkout cart={cart} userId={session ? userId : guestId} />
+        <Checkout cart={cart} userId={userId} />
       </div>
     )
   }
@@ -77,14 +59,16 @@ export default function Cart() {
       </div>
     )
   }
+
   return (
     <div className={`${styles.cart} container navpd`}>
+      <ToastContainer />
       {Items ? (
         <div className={styles.items}>
           <div className={styles.products}>
             {Items}
             <div className={styles.clear} onClick={() => handleCart('clear')}>
-              <AsyncButton title="Clear Cart" disabled={disabled} color="orange" />
+              <AsyncButton title="Clear Cart" disabled={disabled} />
             </div>
           </div>
           <Summary />
@@ -99,7 +83,7 @@ export default function Cart() {
 // export const getServerSideProps = async ctx => {
 //   const session = await getSession(ctx)
 //   let user = null
-//   if (!session) return { props: { user, cart: null } }
+//   if (!session) return { props: { user, cart: null, userId: null } }
 //   if (session) user = session.user
 
 //   try {
@@ -110,7 +94,27 @@ export default function Cart() {
 //   } catch (e) {
 //     console.log(e)
 //     return {
-//       props: { cart: null },
+//       props: { cart: null, userId: null },
 //     }
 //   }
 // }
+export const getServerSideProps = wrapper.getServerSideProps(store => async ctx => {
+  // console.log(store.getState())
+  const session = await getSession(ctx)
+  let user = null
+  if (!session) return { props: { user, cart: null, userId: null } }
+  if (session) user = session.user
+
+  try {
+    const res = await axios.get(process.env.NEXT_PUBLIC_API + '/cart?userId=' + user.id)
+    store.dispatch(makeCart(res.data))
+    return {
+      props: { cart: res.data, userId: user.id },
+    }
+  } catch (e) {
+    console.log(e)
+    return {
+      props: { cart: null, userId: null },
+    }
+  }
+})

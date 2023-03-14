@@ -5,12 +5,15 @@ import Layout from '../components/Layout'
 import Meta from '../components/Meta'
 import { Provider } from 'react-redux'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
 import AdminLayout from './admin/components/AdminLayout'
 // import { PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { v4 as uuid } from 'uuid'
-import { addGuest } from '../redux/usersSlice'
+// import { v4 as uuid } from 'uuid'
+// import { addGuest } from '../redux/usersSlice'
+import { appWithTranslation } from 'next-i18next'
+// toastify css
+import 'react-toastify/dist/ReactToastify.css'
 
 // next font-awesome
 import { config } from '@fortawesome/fontawesome-svg-core'
@@ -40,18 +43,18 @@ function MyApp({ Component, ...rest }) {
   // console.log(rest)
 
   // add Guest to database
-  useEffect(() => {
-    const add_guest = async guestId => {
-      await store
-        .dispatch(addGuest(guestId))
-        .then(() => localStorage.setItem('guestId', guestId))
-        .catch(e => console.log(e))
-    }
-    if (!localStorage.getItem('guestId')) {
-      const guestId = uuid()
-      add_guest(guestId)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const add_guest = async guestId => {
+  //     await store
+  //       .dispatch(addGuest(guestId))
+  //       .then(() => localStorage.setItem('guestId', guestId))
+  //       .catch(e => console.log(e))
+  //   }
+  //   if (!localStorage.getItem('guestId')) {
+  //     const guestId = uuid()
+  //     add_guest(guestId)
+  //   }
+  // }, [])
 
   return (
     <Provider store={store}>
@@ -77,4 +80,4 @@ function MyApp({ Component, ...rest }) {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

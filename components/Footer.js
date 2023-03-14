@@ -1,33 +1,35 @@
-import Link from "next/link";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { sendMail } from "../redux/usersSlice";
-import styles from "./../styles/Footer.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { useRouter } from "next/router";
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { sendMail } from '../redux/usersSlice'
+import styles from './../styles/Footer.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedinIn, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 export default function Footer() {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [msg, setMsg] = useState("");
+  const { t } = useTranslation('footer')
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [msg, setMsg] = useState('')
   const handleChange = e => {
     setEmail({
       email: e.target.value,
-    });
-  };
+    })
+  }
   const handleSubmit = e => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(sendMail(email))
       .unwrap()
       .then(() => {
-        setMsg("Thank you for subscribing");
+        setMsg(t('Thank you for subscribing'))
       })
       .catch(e => {
-        setMsg(e.msg);
-      });
-  };
+        setMsg(e.msg)
+      })
+  }
 
   return (
     <footer className={styles.footer}>
@@ -36,20 +38,20 @@ export default function Footer() {
           <div>Customer care</div>
           <div className={styles.line}></div>
           <div>
-            <Link href="contact">Contact Us</Link>
+            <Link href="contact">{t('Contact Us')}</Link>
           </div>
           <div>
-            <Link href="faqs">FAQS</Link>
+            <Link href="faqs">{t('FAQS')}</Link>
           </div>
           <div>
-            <Link href="terms-of-use">Terms of use</Link>
+            <Link href="terms-of-use">{t('Terms of use')}</Link>
           </div>
           <div>
-            <Link href="privacy-policy">Privacy policy</Link>
+            <Link href="privacy-policy">{t('Privacy policy')}</Link>
           </div>
         </div>
         <div className={styles.sec}>
-          <div>About</div>
+          <div>{t('About')}</div>
           <div className={styles.line}></div>
           <p>
             Curators of ethical fashion and New Zealand designed. Shopping is a destination for style seekers. Located in
@@ -66,17 +68,17 @@ export default function Footer() {
           </p>
         </div>
         <div className={styles.sec}>
-          <div>Newsletter</div>
+          <div>{t('Newsletter')}</div>
           <div className={styles.line}></div>
-          <p>Join our mailing list</p>
+          <p>{t('Join our mailing list')}</p>
           <form method="POST" onSubmit={handleSubmit}>
             <input type="email" name="email" placeholder="example@email.com" onChange={handleChange} required />
-            <input type="submit" value="Subscribe" />
+            <input type="submit" value={t('Subscribe')} />
           </form>
           <div className={styles.msg}>{msg}</div>
         </div>
       </section>
-      <div className={styles.text}>Designed & Developed by Abdullah Mokbl</div>
+      <div className={styles.text}>{t('Designed & Developed by Abdullah Mokbl')}</div>
       <div className={styles.icons}>
         <a href="https://eg.linkedin.com/in/abdullah-mokbl-8667a8ba">
           <FontAwesomeIcon icon={faLinkedinIn} size="xl" />
@@ -96,5 +98,5 @@ export default function Footer() {
         ))}
       </ul>
     </footer>
-  );
+  )
 }

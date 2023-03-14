@@ -8,9 +8,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import AsyncButton from '../../components/AsyncButton'
+import { ToastContainer } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 export default function Product({ product, id }) {
   const dispatch = useDispatch()
+  const router = useRouter()
   const { data: session } = useSession()
   // console.log(user)
   // const { cart } = useSelector(state => state.cart)
@@ -32,17 +35,11 @@ export default function Product({ product, id }) {
   // console.log('fdf')
 
   const handleAddCart = async () => {
+    if (!session) return router.push('/login')
+    if (disabled) return
     setDisabled(true)
-    // dispatch(addCart(product))
-    if (session) {
-      await dispatch(addItemToCart({ userId: session.user.id, product }))
-      // alert()
-      setDisabled(false)
-    } else {
-      const guestId = localStorage.getItem('guestId')
-      await dispatch(addItemToCart({ guestId, product }))
-      setDisabled(false)
-    }
+    await dispatch(addItemToCart({ userId: session.user.id, product }))
+    setDisabled(false)
   }
   const AddButton = () => {
     return (
@@ -104,6 +101,7 @@ export default function Product({ product, id }) {
   }
   return (
     <div className={`${styles.product} container navpd`}>
+      <ToastContainer />
       {product ? <Product /> : <div className={styles.error}>This item doesn't exist</div>}
     </div>
   )

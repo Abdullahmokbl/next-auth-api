@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const url = '/api/'
 // const url = process.env.NEXT_PUBLIC_API
@@ -52,7 +53,7 @@ export const clearAllCart = createAsyncThunk('cart/clear', async (cart, { reject
 // }
 
 const initialState = {
-  cart: null,
+  cart: [],
   // cart: getFromLocalStorage('cart') ? JSON.parse(getFromLocalStorage('cart')) : [],
 }
 
@@ -63,6 +64,7 @@ const cartSlice = createSlice({
     makeCart: (state, action) => {
       console.log(action.payload)
       state.cart = [...action.payload]
+      console.log(state.cart)
     },
     //   addCart: (state, action) => {
     //     const items = JSON.parse(localStorage.getItem('cart')) || []
@@ -103,16 +105,29 @@ const cartSlice = createSlice({
       const { product, type } = action.payload
       const item = state.cart.find(i => i._id === product._id)
       if (item) {
-        state.cart.map(i => (i._id === product._id && type === 'inc' ? i.qty++ : i.qty--))
+        state.cart.map(i => {
+          if (i._id === product._id) {
+            if (type === 'inc') {
+              i.qty++
+              toast.success('Product quantity increased', { position: 'bottom-left' })
+            } else {
+              i.qty--
+              toast.success('Product quantity decreased', { position: 'bottom-left' })
+            }
+          }
+        })
       } else {
         state.cart = [...state.cart, product]
+        toast.success('Product added to cart', { position: 'bottom-left' })
       }
     },
     [delItemFromCart.fulfilled]: (state, action) => {
       state.cart = [...state.cart].filter(product => product._id !== action.payload)
+      toast.error('Product removed from cart', { position: 'bottom-left' })
     },
     [clearAllCart.fulfilled]: state => {
       state.cart = []
+      toast.error('Cart is clear', { position: 'bottom-left' })
     },
   },
 })

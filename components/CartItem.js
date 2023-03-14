@@ -15,16 +15,17 @@ export default function CartItem({ product, disabled, handleCart }) {
       </Link>
       <div>
         <div className={styles.remove} onClick={() => handleCart('del', product._id)}>
-          <FontAwesomeIcon icon={faTrash} />
-          <AsyncButton title="Remove" disabled={disabled} />
+          <AsyncButton title="Remove" disabled={disabled}>
+            <FontAwesomeIcon icon={faTrash} />
+          </AsyncButton>
         </div>
         <div className={styles.qty}>
           <div className={product.qty <= 1 ? 'disable' : undefined} onClick={() => handleCart('dec', product)}>
-            <AsyncButton title="-" disabled={disabled} />
+            <AsyncButton title="-" disabled={disabled} size="lg" />
           </div>
           <span>{product.qty}</span>
           <div onClick={() => handleCart('inc', product)}>
-            <AsyncButton title="+" disabled={disabled} />
+            <AsyncButton title="+" disabled={disabled} size="lg" />
           </div>
         </div>
       </div>
